@@ -1,0 +1,108 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{538396EA-5CE0-4439-8221-880F53CBBAE9}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="01. 웹캠 라이브러리 사용\Sample01.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="02. 화상 압축 라이브러리 사용\Sample02.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="03. 음성 압축 라이브러리 사용\Sample03.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="04. 간단한 화상회의 서버\VideoChatServer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="05. 간단한 화상회의 클라이언트 - Chat\VideoChatClient01.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="06. 간단한 화상회의 클라이언트 - Voice\VideoChatClient02.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="07. 간단한 화상회의 클라이언트 - Video\VideoChatClient03.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Sample01">
+        <MSBuild Projects="01. 웹캠 라이브러리 사용\Sample01.dproj"/>
+    </Target>
+    <Target Name="Sample01:Clean">
+        <MSBuild Projects="01. 웹캠 라이브러리 사용\Sample01.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sample01:Make">
+        <MSBuild Projects="01. 웹캠 라이브러리 사용\Sample01.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Sample02">
+        <MSBuild Projects="02. 화상 압축 라이브러리 사용\Sample02.dproj"/>
+    </Target>
+    <Target Name="Sample02:Clean">
+        <MSBuild Projects="02. 화상 압축 라이브러리 사용\Sample02.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sample02:Make">
+        <MSBuild Projects="02. 화상 압축 라이브러리 사용\Sample02.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Sample03">
+        <MSBuild Projects="03. 음성 압축 라이브러리 사용\Sample03.dproj"/>
+    </Target>
+    <Target Name="Sample03:Clean">
+        <MSBuild Projects="03. 음성 압축 라이브러리 사용\Sample03.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sample03:Make">
+        <MSBuild Projects="03. 음성 압축 라이브러리 사용\Sample03.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VideoChatServer">
+        <MSBuild Projects="04. 간단한 화상회의 서버\VideoChatServer.dproj"/>
+    </Target>
+    <Target Name="VideoChatServer:Clean">
+        <MSBuild Projects="04. 간단한 화상회의 서버\VideoChatServer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VideoChatServer:Make">
+        <MSBuild Projects="04. 간단한 화상회의 서버\VideoChatServer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VideoChatClient01">
+        <MSBuild Projects="05. 간단한 화상회의 클라이언트 - Chat\VideoChatClient01.dproj"/>
+    </Target>
+    <Target Name="VideoChatClient01:Clean">
+        <MSBuild Projects="05. 간단한 화상회의 클라이언트 - Chat\VideoChatClient01.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VideoChatClient01:Make">
+        <MSBuild Projects="05. 간단한 화상회의 클라이언트 - Chat\VideoChatClient01.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VideoChatClient02">
+        <MSBuild Projects="06. 간단한 화상회의 클라이언트 - Voice\VideoChatClient02.dproj"/>
+    </Target>
+    <Target Name="VideoChatClient02:Clean">
+        <MSBuild Projects="06. 간단한 화상회의 클라이언트 - Voice\VideoChatClient02.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VideoChatClient02:Make">
+        <MSBuild Projects="06. 간단한 화상회의 클라이언트 - Voice\VideoChatClient02.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VideoChatClient03">
+        <MSBuild Projects="07. 간단한 화상회의 클라이언트 - Video\VideoChatClient03.dproj"/>
+    </Target>
+    <Target Name="VideoChatClient03:Clean">
+        <MSBuild Projects="07. 간단한 화상회의 클라이언트 - Video\VideoChatClient03.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VideoChatClient03:Make">
+        <MSBuild Projects="07. 간단한 화상회의 클라이언트 - Video\VideoChatClient03.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Sample01;Sample02;Sample03;VideoChatServer;VideoChatClient01;VideoChatClient02;VideoChatClient03"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Sample01:Clean;Sample02:Clean;Sample03:Clean;VideoChatServer:Clean;VideoChatClient01:Clean;VideoChatClient02:Clean;VideoChatClient03:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Sample01:Make;Sample02:Make;Sample03:Make;VideoChatServer:Make;VideoChatClient01:Make;VideoChatClient02:Make;VideoChatClient03:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
