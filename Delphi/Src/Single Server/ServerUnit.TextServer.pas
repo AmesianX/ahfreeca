@@ -220,16 +220,21 @@ begin
   Connection.UserName := AResult.Values['user_name'];
   Connection.UserLevel := AResult.Integers['user_level'];
 
-  // 무료 버전 또는 테스트용으로 무조건 로그인 되는 경우에는 사용자 아이디가 URL 인코딩 되지 않는다.
   if not AResult.Booleans['FreeLogin'] then begin
-    Connection.UserID := TIdURI.URLDecode(Connection.UserID);
+    // 테스트용으로 무조건 로그인 되는 경우에는 사용자 아이디가 URL 인코딩 되지 않는다.
+    // Connection.UserID := TIdURI.URLDecode(Connection.UserID);
+    Connection.UserID := Connection.UserID;
+
     Connection.UserID := StringReplace(Connection.UserID, '%20', ' ', [rfReplaceAll]);
   end;
 
   ErrorMsg := AResult.Values['error_msg'];
 
   if Trim(ErrorMsg) <> '' then begin
+    // 테스트용으로 무조건 로그인 되는 경우에는 사용자 아이디가 URL 인코딩 되지 않는다.
+    // ErrorMsg := TIdURI.URLDecode(ErrorMsg);
     ErrorMsg := TIdURI.URLDecode(ErrorMsg);
+
     ErrorMsg := StringReplace(ErrorMsg, '%20', ' ', [rfReplaceAll]);
   end else begin
     ErrorMsg := AResult.Values['error_msg_euc-kr'];
