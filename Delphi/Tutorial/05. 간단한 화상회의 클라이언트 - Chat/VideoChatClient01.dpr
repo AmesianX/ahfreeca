@@ -9,7 +9,12 @@ uses
   Option in 'Core\Option.pas',
   _frChat in '_frChat.pas' {frChat: TFrame},
   Config in 'Config.pas',
-  Protocol in 'Protocol.pas';
+  Protocol in 'Protocol.pas',
+  SuperClient in '..\..\Lib\supersocket\SuperClient.pas',
+  SuperClient.Repeater in '..\..\Lib\supersocket\SuperClient.Repeater.pas',
+  SuperClient.Socket in '..\..\Lib\supersocket\SuperClient.Socket.pas',
+  SuperSocketUtils in '..\..\Lib\supersocket\SuperSocketUtils.pas',
+  PacketReader in '..\..\Lib\supersocket\PacketReader.pas';
 
 {$R *.res}
 

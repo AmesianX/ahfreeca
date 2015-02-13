@@ -109,6 +109,27 @@
         <DCCReference Include="Core\VoiceIn.pas"/>
         <DCCReference Include="Config.pas"/>
         <DCCReference Include="Protocol.pas"/>
+        <DCCReference Include="..\..\Lib\supersocket\PacketReader.pas"/>
+        <DCCReference Include="..\..\Lib\supersocket\SuperClient.pas"/>
+        <DCCReference Include="..\..\Lib\supersocket\SuperClient.Repeater.pas"/>
+        <DCCReference Include="..\..\Lib\supersocket\SuperClient.Socket.pas"/>
+        <DCCReference Include="..\..\Lib\supersocket\SuperSocketUtils.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\EchoCancel.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\msacm2.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\SoundTouchDLL.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\Speex.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\SpeexDecoder.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\SpeexUtils.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\VoiceBuffer.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\VoicePlayer.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\WaveOut.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\WaveOutHeader.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\VoiceZipUtils.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\VoiceQuality.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\VoiceRecorder.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\WaveIn.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\WaveInDeviceList.pas"/>
+        <DCCReference Include="..\..\Lib\voicezip\SpeexEncoder.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

@@ -1,4 +1,0 @@
-SuperSocket released under the GPL license.
-In addition, you are not allowed to use this for commercial purposes.
-
-ryujt658@hanmail.net

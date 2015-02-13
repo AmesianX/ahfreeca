@@ -277,7 +277,7 @@ end;
 procedure TSocket.do_Send(ACustomData:DWord; AData: Pointer; ASize: integer);
 var
   Buffer : TIdBytes;
-  Header : TSuperSocketPacket;
+  Header : TSuperSocketPacketHeader;
 begin
   if ASize < 0 then
     raise Exception.Create('SuperClient.TSocket.do_Send: 패킷 크기가 제한을 넘었습니다. (ASize < 0)');
@@ -285,16 +285,16 @@ begin
   if ASize > PACKET_SIZE_LIMIT then
     raise Exception.Create('SuperClient.TSocket.do_Send: 패킷 크기가 제한을 넘었습니다. (ASize > PACKET_SIZE_LIMIT)');
 
-  Header.Header.CustomData := ACustomData;
-  Header.Header.Size := ASize;
+  Header.CustomData := ACustomData;
+  Header.Size := ASize;
 
-  SetLength(Buffer, SizeOf(TSuperSocketPacket) + ASize);
+  SetLength(Buffer, SizeOf(TSuperSocketPacketHeader) + ASize);
 
-  Move(Header, Buffer[0], SizeOf(TSuperSocketPacket));
+  Move(Header, Buffer[0], SizeOf(TSuperSocketPacketHeader));
 
-  if ASize > 0 then Move(AData^, Buffer[SizeOf(TSuperSocketPacket)], ASize);
+  if ASize > 0 then Move(AData^, Buffer[SizeOf(TSuperSocketPacketHeader)], ASize);
 
-  FSocket.IOHandler.Write(Buffer, SizeOf(TSuperSocketPacket) + ASize);
+  FSocket.IOHandler.Write(Buffer, SizeOf(TSuperSocketPacketHeader) + ASize);
 end;
 
 procedure TSocket.Send(ACustomData:DWord; AData: Pointer; ASize: integer);

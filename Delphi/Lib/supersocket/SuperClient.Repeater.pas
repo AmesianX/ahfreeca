@@ -80,7 +80,7 @@ begin
   FSocket.Port := APort;
 
   FSimpleThread := TSimpleThread.Create(on_Repeat);
-  FSimpleThread.Name := 'SuperClient.TRepeater';
+  FSimpleThread.Name := 'RyuSocketClient.TRepeater';
 
   SetThreadPriority(FSimpleThread.Handle, THREAD_PRIORITY_HIGHEST);
 end;
@@ -108,7 +108,7 @@ begin
 
     {$IFDEF DEBUG}
     if ServerIsBusy then
-      Trace( Format('SuperClient.TRepeater.on_Repeat: FServerIsBusy=%d', [FServerIsBusy]) );
+      Trace( Format('RyuSocketClient.TRepeater.on_Repeat: FServerIsBusy=%d', [FServerIsBusy]) );
     {$ENDIF}
   end;
 end;
@@ -171,7 +171,7 @@ begin
       do_ReadPacket;
     except
       on E : Exception do begin
-        Trace('SuperClient.TRepeater.on_Repeat: ' + E.Message);
+        Trace('RyuSocketClient.TRepeater.on_Repeat: ' + E.Message);
         SimpleThread.Terminate;
         Break;
       end;
