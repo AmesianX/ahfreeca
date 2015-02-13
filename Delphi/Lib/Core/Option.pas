@@ -39,7 +39,7 @@ begin
   FIniFileName := DeleteRight(ParamStr(0), '.') + 'ini';
 
   FUserID := GetSwitchValue('UserID');
-  FUserPW := GetSwitchValue('FUserPW');
+  FUserPW := GetSwitchValue('UserPW');
 end;
 
 destructor TOption.Destroy;
