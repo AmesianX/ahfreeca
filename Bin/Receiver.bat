@@ -1,1 +1,1 @@
-start Sender.exe -UserID=Lee -UserPW=1234
+start Client.exe -UserID=Lee -UserPW=1234

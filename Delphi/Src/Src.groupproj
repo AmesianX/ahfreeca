@@ -6,9 +6,6 @@
         <Projects Include="Single Server\SingleServer.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Sender\Sender.dproj">
-            <Dependencies/>
-        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -26,23 +23,14 @@
     <Target Name="SingleServer:Make">
         <MSBuild Projects="Single Server\SingleServer.dproj" Targets="Make"/>
     </Target>
-    <Target Name="Sender">
-        <MSBuild Projects="Sender\Sender.dproj"/>
-    </Target>
-    <Target Name="Sender:Clean">
-        <MSBuild Projects="Sender\Sender.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="Sender:Make">
-        <MSBuild Projects="Sender\Sender.dproj" Targets="Make"/>
-    </Target>
     <Target Name="Build">
-        <CallTarget Targets="SingleServer;Sender"/>
+        <CallTarget Targets="SingleServer"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="SingleServer:Clean;Sender:Clean"/>
+        <CallTarget Targets="SingleServer:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="SingleServer:Make;Sender:Make"/>
+        <CallTarget Targets="SingleServer:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
