@@ -8,10 +8,14 @@ uses
   ClientUnit.VoiceClient,
   ClientUnit.VideoClient,
   Config, Protocol,
+  RyuLibBase,
   SysUtils, Classes;
 
 type
-  TClientUnit = class
+  TClientUnit = class (TInterfaceBase, ICore)
+  private // implementation of ICore
+    procedure Initialize;
+    procedure Finalize;
   private
     FTextClient : TTextClient;
   private
@@ -19,6 +23,7 @@ type
   private
     FVideoClient : TVideoClient;
     function GetTextClient: ITextClient;
+    function GetVoiceClient: IVoiceClient;
   public
     constructor Create;
     destructor Destroy; override;
@@ -29,6 +34,7 @@ type
     procedure Disconnect;
   public
     property TextClient : ITextClient read GetTextClient;
+    property VoiceClient : IVoiceClient read GetVoiceClient;
   end;
 
 implementation
@@ -92,9 +98,24 @@ begin
 
 end;
 
+procedure TClientUnit.Finalize;
+begin
+  Disconnect;
+end;
+
 function TClientUnit.GetTextClient: ITextClient;
 begin
   Result := FTextClient;
+end;
+
+function TClientUnit.GetVoiceClient: IVoiceClient;
+begin
+  Result := FVoiceClient as IVoiceClient;
+end;
+
+procedure TClientUnit.Initialize;
+begin
+  //
 end;
 
 initialization

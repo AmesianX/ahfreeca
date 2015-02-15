@@ -2,7 +2,7 @@ object fmMain: TfmMain
   Left = 0
   Top = 0
   BorderStyle = bsNone
-  Caption = 'Sender'
+  Caption = 'Ah! Free Ca'
   ClientHeight = 240
   ClientWidth = 320
   Color = clBtnFace

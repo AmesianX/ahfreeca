@@ -14,26 +14,61 @@ object frLoginedLayout: TfrLoginedLayout
     TabOrder = 0
     object Splitter1: TSplitter
       Left = 0
-      Top = 133
+      Top = 380
       Width = 240
       Height = 3
       Cursor = crVSplit
       Align = alTop
-      ExplicitTop = 333
-      ExplicitWidth = 267
+      ExplicitLeft = 9
+      ExplicitTop = 342
     end
-    object Panel1: TPanel
+    object plControlBox: TPanel
       Left = 0
       Top = 0
       Width = 240
-      Height = 133
+      Height = 180
       Align = alTop
-      Caption = 'Panel1'
+      BevelOuter = bvNone
       TabOrder = 0
+      inline frControlBoxSender: TfrControlBoxSender
+        Left = 0
+        Top = 0
+        Width = 240
+        Height = 180
+        Align = alClient
+        Color = clBlack
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 0
+        Visible = False
+        ExplicitTop = -32
+        inherited BitmapTile1: TBitmapTile
+          Top = 148
+        end
+      end
+      inline frControlBoxReceiver: TfrControlBoxReceiver
+        Left = 0
+        Top = 0
+        Width = 240
+        Height = 180
+        Align = alClient
+        Color = clBlack
+        ParentBackground = False
+        ParentColor = False
+        TabOrder = 1
+        Visible = False
+        ExplicitWidth = 560
+        ExplicitHeight = 600
+        inherited BitmapTile1: TBitmapTile
+          Top = 148
+          ExplicitTop = 568
+          ExplicitWidth = 560
+        end
+      end
     end
     inline frUserList: TfrUserList
       Left = 0
-      Top = 136
+      Top = 180
       Width = 240
       Height = 200
       Align = alTop
@@ -47,30 +82,38 @@ object frLoginedLayout: TfrLoginedLayout
       ParentDoubleBuffered = False
       ParentFont = False
       TabOrder = 1
-      ExplicitTop = 136
+      ExplicitTop = 180
       ExplicitWidth = 240
       ExplicitHeight = 200
       inherited Shape1: TShape
         Width = 240
+        ExplicitWidth = 240
       end
       inherited Shape2: TShape
         Top = 197
         Width = 240
+        ExplicitTop = 197
+        ExplicitWidth = 240
       end
       inherited Shape3: TShape
         Height = 194
+        ExplicitHeight = 194
       end
       inherited Shape4: TShape
         Left = 237
         Height = 194
+        ExplicitLeft = 237
+        ExplicitHeight = 194
       end
       inherited UserList: TListView
         Width = 234
         Height = 194
+        ExplicitWidth = 234
+        ExplicitHeight = 194
       end
       inherited ImageList: TImageList
         Bitmap = {
-          494C010102000800A40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C010102000800AC0010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000001000000001002000000000000010
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -212,46 +255,61 @@ object frLoginedLayout: TfrLoginedLayout
     end
     inline frChat: TfrChat
       Left = 0
-      Top = 336
+      Top = 383
       Width = 240
-      Height = 264
+      Height = 217
       Align = alClient
       DoubleBuffered = True
       ParentBackground = False
       ParentDoubleBuffered = False
       TabOrder = 2
-      ExplicitLeft = -211
-      ExplicitTop = 52
+      ExplicitTop = 383
+      ExplicitWidth = 240
+      ExplicitHeight = 217
       inherited Shape1: TShape
         Width = 240
+        ExplicitWidth = 240
       end
       inherited Shape2: TShape
-        Top = 261
+        Top = 214
         Width = 240
+        ExplicitTop = 261
+        ExplicitWidth = 240
       end
       inherited Shape3: TShape
-        Height = 258
+        Height = 211
+        ExplicitHeight = 258
       end
       inherited Shape4: TShape
         Left = 237
-        Height = 258
+        Height = 211
+        ExplicitLeft = 237
+        ExplicitHeight = 258
       end
       inherited plMain: TPanel
         Width = 234
-        Height = 258
+        Height = 211
+        ExplicitWidth = 234
+        ExplicitHeight = 211
         inherited plChatInput: TPanel
-          Top = 184
+          Top = 137
           Width = 234
+          ExplicitTop = 137
+          ExplicitWidth = 234
           inherited edMsg: TMemo
             Width = 228
+            ExplicitWidth = 228
           end
           inherited btLock: TSwitchButton
             Left = 213
+            ExplicitLeft = 213
           end
         end
         inherited moChat: TRichEdit
           Width = 234
-          Height = 184
+          Height = 137
+          ExplicitWidth = 234
+          ExplicitHeight = 137
         end
       end
     end

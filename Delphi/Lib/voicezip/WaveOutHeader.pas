@@ -27,7 +27,7 @@ implementation
 
 constructor TWaveOutHeader.Create;
 var
-  Loop, iErrorCode : Integer;
+  Loop: Integer;
 begin
   inherited;
 
@@ -60,6 +60,8 @@ begin
 
     if FHeaders[FHeaderIndex].dwFlags = 0 then Break;
   end;
+
+  // TODO: 못 찾았을 때 처리
 
   Result := @FHeaders[FHeaderIndex];
   Result^.dwUser   := 0;

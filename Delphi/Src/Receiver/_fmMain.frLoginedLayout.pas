@@ -3,18 +3,20 @@ unit _fmMain.frLoginedLayout;
 interface
 
 uses
-  FrameBase, ValueList, RyuGraphics,
+  FrameBase, ValueList, RyuGraphics, Para,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.jpeg,
-  Vcl.ExtCtrls, _frChat, _frUserList;
+  Vcl.ExtCtrls, _frChat, _frUserList, _frControlBoxSender, _frControlBoxReceiver;
 
 type
   TfrLoginedLayout = class(TFrame, IFrameBase)
     plRight: TPanel;
-    Panel1: TPanel;
+    plControlBox: TPanel;
     Splitter1: TSplitter;
     frChat: TfrChat;
     frUserList: TfrUserList;
+    frControlBoxSender: TfrControlBoxSender;
+    frControlBoxReceiver: TfrControlBoxReceiver;
   private
     procedure BeforeShow;
     procedure AfterShow;
@@ -76,6 +78,9 @@ end;
 constructor TfrLoginedLayout.Create(AOwner: TComponent);
 begin
   inherited;
+
+  frControlBoxSender.Visible   := FindSwitchName('IsSender');
+  frControlBoxReceiver.Visible := not FindSwitchName('IsSender');
 
   TCore.Obj.View.Add(Self);
 end;

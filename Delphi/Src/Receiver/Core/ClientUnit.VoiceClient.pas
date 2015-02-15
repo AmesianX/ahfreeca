@@ -9,24 +9,28 @@ uses
   Windows, SysUtils, Classes, TypInfo;
 
 type
-  TVoiceClient = class
-  private
+  TVoiceClient = class (TInterfaceBase, IVoiceClient)
+  private // implementation of IVoiceClient
+    procedure SendVoice(AData:pointer; ASize:integer);
   private
     FSocket : TSuperClient;
     procedure on_FSocket_Connected(Sender:TObject);
     procedure on_FSocket_Received(Sender:TObject; ACustomData:DWord; AData:pointer; ASize:integer);
     procedure on_FSocket_Disconnected(Sender:TObject);
+  private
+    procedure rp_Speex(ACustomHeader:TCustomHeader; AData:pointer; ASize:integer);
   public
     constructor Create;
     destructor Destroy; override;
 
     function Connect:boolean;
     procedure Disconnect;
-
-    procedure SendVoice(AData:pointer; ASize:integer);
   end;
 
 implementation
+
+uses
+  VoiceReceiver;
 
 { TVoiceClient }
 
@@ -42,7 +46,7 @@ begin
 
   FSocket := TSuperClient.Create(nil);
   FSocket.Host := SERVER_HOST;
-  FSocket.Port := TEXT_SERVER_PORT;
+  FSocket.Port := VOICE_SERVER_PORT;
   FSocket.OnConnected := on_FSocket_Connected;
   FSocket.OnReceived := on_FSocket_Received;
   FSocket.OnDisconnected := on_FSocket_Disconnected;
@@ -84,8 +88,15 @@ begin
   Trace( Format('TVoiceClient.on_FSocket_Received - PacketType: %s', [sPacketType]) );
   {$ENDIF}
 
-//  case TPacketType(CustomHeader.PacketType) of
-//  end;
+  case TPacketType(CustomHeader.PacketType) of
+    ptSpeex: rp_Speex( CustomHeader, AData, ASize );
+  end;
+end;
+
+procedure TVoiceClient.rp_Speex(ACustomHeader: TCustomHeader; AData: pointer;
+  ASize: integer);
+begin
+  TVoiceReceiver.Obj.DataIn( AData, ASize );
 end;
 
 procedure TVoiceClient.SendVoice(AData: pointer; ASize: integer);

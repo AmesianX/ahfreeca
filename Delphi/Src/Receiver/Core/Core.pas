@@ -4,6 +4,7 @@ unit Core;
 interface
 
 uses
+  CoreInterface,
   View, Option, ValueList,
   SysUtils, Classes;
 
@@ -32,7 +33,7 @@ type
 implementation
 
 uses
-  ClientUnit;
+  ClientUnit, VoiceSender, VoiceReceiver;
 
 var
   MyObject : TCore = nil;
@@ -71,7 +72,9 @@ begin
   FView.sp_Finalize;
   FView.Active := false;
 
-  TClientUnit.Obj.Disconnect;
+  (TVoiceReceiver.Obj as ICore).Finalize;
+  (TVoiceSender.Obj as ICore).Finalize;
+  (TClientUnit.Obj as ICore).Finalize;
 end;
 
 procedure TCore.Initialize;
@@ -80,6 +83,10 @@ begin
 
   if FIsInitialized then Exit;
   FIsInitialized := true;
+
+  (TClientUnit.Obj as ICore).Initialize;
+  (TVoiceSender.Obj as ICore).Initialize;
+  (TVoiceReceiver.Obj as ICore).Initialize;
 
   FView.sp_Initialize;
 end;
