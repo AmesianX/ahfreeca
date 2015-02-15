@@ -4,7 +4,7 @@ interface
 
 uses
   SuperClient.Repeater,
-  DebugTools, SuperSocketUtils,
+  DebugTools, SuperSocketUtils, Strg,
   Windows, Classes, SysUtils, SyncObjs;
 
 type
@@ -31,8 +31,11 @@ type
     procedure Connect;
     procedure Disconnect;
 
-    procedure Send(ACustomData:DWord; AData:Pointer; ASize:integer);
-    procedure SendNow(ACustomData:DWord; AData:Pointer; ASize:integer);
+    procedure Send(ACustomData:DWord; AData:Pointer; ASize:integer); overload;
+    procedure Send(ACustomData:DWord; AText:string); overload;
+
+    procedure SendNow(ACustomData:DWord; AData:Pointer; ASize:integer); overload;
+    procedure SendNow(ACustomData:DWord; AText:string); overload;
 
     procedure Flush;
   published
@@ -168,6 +171,32 @@ begin
     if FRepeater <> nil then FRepeater.SendNow(ACustomData, AData, ASize);
   finally
     FCS.Release;
+  end;
+end;
+
+procedure TSuperClient.Send(ACustomData: DWord; AText: string);
+var
+  Data : pointer;
+  Size : integer;
+begin
+  TextToData( AText, Data, Size);
+  try
+    Send( ACustomData, Data, Size );
+  finally
+    if Data <> nil then FreeMem(Data);
+  end;
+end;
+
+procedure TSuperClient.SendNow(ACustomData: DWord; AText: string);
+var
+  Data : pointer;
+  Size : integer;
+begin
+  TextToData( AText, Data, Size);
+  try
+    SendNow( ACustomData, Data, Size );
+  finally
+    if Data <> nil then FreeMem(Data);
   end;
 end;
 

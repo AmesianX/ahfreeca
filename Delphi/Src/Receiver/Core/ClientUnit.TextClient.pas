@@ -183,13 +183,13 @@ begin
   CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptAskUserList );
 
+  // SuperSocket은 Zero-byte Data를 허용하지 않는다.
+  // 따라서, PacketType만 보내서는 안되며, 더미라도 함께 보내야 한다.
   FSocket.SendNow( CustomHeader.ToDWord, @Dummy, SizeOf(Dummy) );
 end;
 
 procedure TTextClient.sp_Chat(AFromID, AMsg: string; AColor: TColor);
 var
-  Data : pointer;
-  Size : integer;
   ValueList : TValueList;
   CustomHeader : TCustomHeader;
 begin
@@ -203,12 +203,7 @@ begin
     ValueList.Values['Msg'] := AMsg;
     ValueList.Integers['Color'] := AColor;
 
-    TextToData( ValueList.Text, Data, Size );
-    try
-      FSocket.SendNow( CustomHeader.ToDWord, Data, Size );
-    finally
-      if Data <> nil then FreeMem(Data);
-    end;
+    FSocket.SendNow( CustomHeader.ToDWord, ValueList.Text );
   finally
     ValueList.Free;
   end;
@@ -216,8 +211,6 @@ end;
 
 procedure TTextClient.sp_KickOut(AUserID: string);
 var
-  Data : pointer;
-  Size : integer;
   ValueList : TValueList;
   CustomHeader : TCustomHeader;
 begin
@@ -228,12 +221,7 @@ begin
   try
     ValueList.Values['UserID'] := AUserID;
 
-    TextToData( ValueList.Text, Data, Size );
-    try
-      FSocket.SendNow( CustomHeader.ToDWord, Data, Size );
-    finally
-      if Data <> nil then FreeMem(Data);
-    end;
+    FSocket.SendNow( CustomHeader.ToDWord, ValueList.Text );
   finally
     ValueList.Free;
   end;
@@ -241,8 +229,6 @@ end;
 
 procedure TTextClient.sp_Login;
 var
-  Data : pointer;
-  Size : integer;
   ValueList : TValueList;
   CustomHeader : TCustomHeader;
 begin
@@ -257,12 +243,7 @@ begin
     ValueList.Values['UserID'] := TCore.Obj.Option.UserID;
     ValueList.Values['UserPW'] := TCore.Obj.Option.UserPW;
 
-    TextToData( ValueList.Text, Data, Size );
-    try
-      FSocket.SendNow( CustomHeader.ToDWord, Data, Size );
-    finally
-      if Data <> nil then FreeMem(Data);
-    end;
+    FSocket.SendNow( CustomHeader.ToDWord, ValueList.Text );
   finally
     ValueList.Free;
   end;
@@ -270,8 +251,6 @@ end;
 
 procedure TTextClient.sp_Mute(AUserID: string; AMute: boolean);
 var
-  Data : pointer;
-  Size : integer;
   ValueList : TValueList;
   CustomHeader : TCustomHeader;
 begin
@@ -283,12 +262,7 @@ begin
     ValueList.Values['UserID'] := AUserID;
     ValueList.Booleans['Mute'] := AMute;
 
-    TextToData( ValueList.Text, Data, Size );
-    try
-      FSocket.SendNow( CustomHeader.ToDWord, Data, Size );
-    finally
-      if Data <> nil then FreeMem(Data);
-    end;
+    FSocket.SendNow( CustomHeader.ToDWord, ValueList.Text );
   finally
     ValueList.Free;
   end;
@@ -296,8 +270,6 @@ end;
 
 procedure TTextClient.sp_Whisper(AFromID, AUserIDs, AMsg: string; AColor: TColor);
 var
-  Data : pointer;
-  Size : integer;
   ValueList : TValueList;
   CustomHeader : TCustomHeader;
 begin
@@ -311,12 +283,7 @@ begin
     ValueList.Values['Msg'] := AMsg;
     ValueList.Integers['Color'] := AColor;
 
-    TextToData( ValueList.Text, Data, Size );
-    try
-      FSocket.SendNow( CustomHeader.ToDWord, Data, Size );
-    finally
-      if Data <> nil then FreeMem(Data);
-    end;
+    FSocket.SendNow( CustomHeader.ToDWord, ValueList.Text );
   finally
     ValueList.Free;
   end;
