@@ -48,7 +48,6 @@ end;
 
 function TWaveOutHeader.Get(AHWaveOut:HWaveOut; AData:pointer; ASize:integer): PWaveHdr;
 var
-  isReady : boolean;
   Loop, iErrorCode : integer;
 begin
   Result := nil;

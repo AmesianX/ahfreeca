@@ -23,7 +23,6 @@ type
     FOnData: TVoiceDataEvent;
     FVolumeIn: integer;
     FMute: boolean;
-    procedure SetUseEchoCancel(const Value: boolean);
   protected
     function GetMute: boolean;
     procedure SetMute(const Value: boolean);
@@ -176,11 +175,6 @@ end;
 procedure TVoiceRecorder.SetMute(const Value: boolean);
 begin
   FMute := Value;
-end;
-
-procedure TVoiceRecorder.SetUseEchoCancel(const Value: boolean);
-begin
-  FUseEchoCancel := Value;
 end;
 
 procedure TVoiceRecorder.SetVolume(const Value: Single);
