@@ -16,4 +16,15 @@ object fmMain: TfmMain
   OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
+  object tmClose: TTimer
+    Enabled = False
+    OnTimer = tmCloseTimer
+    Left = 44
+    Top = 44
+  end
+  object ApplicationEvents: TApplicationEvents
+    OnException = ApplicationEventsException
+    Left = 44
+    Top = 120
+  end
 end
