@@ -6,7 +6,7 @@
         <Projects Include="Single Server\SingleServer.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="Receiver\Client.dproj">
+        <Projects Include="Client\Client.dproj">
             <Dependencies/>
         </Projects>
     </ItemGroup>
@@ -27,13 +27,13 @@
         <MSBuild Projects="Single Server\SingleServer.dproj" Targets="Make"/>
     </Target>
     <Target Name="Client">
-        <MSBuild Projects="Receiver\Client.dproj"/>
+        <MSBuild Projects="Client\Client.dproj"/>
     </Target>
     <Target Name="Client:Clean">
-        <MSBuild Projects="Receiver\Client.dproj" Targets="Clean"/>
+        <MSBuild Projects="Client\Client.dproj" Targets="Clean"/>
     </Target>
     <Target Name="Client:Make">
-        <MSBuild Projects="Receiver\Client.dproj" Targets="Make"/>
+        <MSBuild Projects="Client\Client.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
         <CallTarget Targets="SingleServer;Client"/>
