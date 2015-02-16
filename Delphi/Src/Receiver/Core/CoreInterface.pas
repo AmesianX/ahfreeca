@@ -6,13 +6,6 @@ uses
   Classes, SysUtils, Graphics, ComCtrls;
 
 type
-  ICore = interface
-    ['{40FAC091-7257-4905-89D3-E57EB27FCB47}']
-
-    procedure Initialize;
-    procedure Finalize;
-  end;
-
   ITextClient = interface
     ['{AA3E769A-97D8-42C4-B8EF-964D5BE65A65}']
 
@@ -45,6 +38,7 @@ type
   IVoiceClient = interface
     ['{EFF69078-CC22-42B6-8CE6-CA5B3E7A47E3}']
 
+    /// 음성 데이터를 전송한다.
     procedure SendVoice(AData:pointer; ASize:integer);
   end;
 

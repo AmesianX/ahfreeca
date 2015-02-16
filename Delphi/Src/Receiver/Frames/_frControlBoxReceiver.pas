@@ -18,6 +18,8 @@ type
     btSpeaker: TSwitchButton;
     Volume: TMusicTrackBar;
     Timer: TTimer;
+    btOnAir: TSwitchButton;
+    Image1: TImage;
     procedure btSpeakerClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure VolumeChanged(Sender: TObject);

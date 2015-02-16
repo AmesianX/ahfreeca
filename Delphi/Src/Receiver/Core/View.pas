@@ -19,15 +19,23 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
 
-    procedure Add(Observer:TObject);  /// 메시지를 수신 할 객체를 등록한다.
-    procedure Remove(Observer:TObject);  /// Observer에게 메시지 전송을 중단한다.
+    /// 메시지를 수신 할 객체를 등록한다.
+    procedure Add(Observer:TObject);
 
+    /// Observer에게 메시지 전송을 중단한다.
+    procedure Remove(Observer:TObject);
+
+    /// 등록 된 모든 Observer에게 메시지를 전송한다.
     procedure AsyncBroadcast(AMsg:string);
 
-    procedure sp_Initialize;  /// TCore가 초기화 됐다.
-    procedure sp_Finalize;    /// TCore의 종료처리가 시작됐다.
+    /// TCore가 초기화 됐다.
+    procedure sp_Initialize;
 
-    procedure sp_ViewIsReady;  /// 모든 View 객체들이 생성 되었다.
+    /// TCore의 종료처리가 시작됐다.
+    procedure sp_Finalize;
+
+    /// 모든 View 객체들이 생성 되었다.
+    procedure sp_ViewIsReady;
 
     /// 시스템 내부에서 경고 메시지를 출력하고자 할 때 쓰인다.
     procedure sp_SystemMessage(AMsg:string; AColor:TColor=clRed);
@@ -37,8 +45,15 @@ type
 
     /// 사용자 목록에 변화가 있다.
     procedure sp_UserListChanged;
+
+    /// 강사 프로그램에서만 사용 됨.  방송을 시작하였음을 알려 준다.
+    procedure sp_StartShow;
+
+    /// 강사 프로그램에서만 사용 됨.  방송을 종료하였음을 알려 준다.
+    procedure sp_StopShow;
   published
-    property Active : boolean read GetActive write SetActive;  /// 메시지 전송 중인 가?
+    /// 메시지 전송 중인 가?
+    property Active : boolean read GetActive write SetActive;
   end;
 
 implementation
@@ -104,6 +119,34 @@ begin
   Params := TValueList.Create;
   try
     Params.Values['Code'] := 'Initialize';
+    FObserverList.AsyncBroadcast(Params);
+  finally
+    Params.Free;
+  end;
+end;
+
+procedure TView.sp_StartShow;
+var
+  Params : TValueList;
+begin
+  Params := TValueList.Create;
+  try
+    Params.Values['Code'] := 'StartShow';
+
+    FObserverList.AsyncBroadcast(Params);
+  finally
+    Params.Free;
+  end;
+end;
+
+procedure TView.sp_StopShow;
+var
+  Params : TValueList;
+begin
+  Params := TValueList.Create;
+  try
+    Params.Values['Code'] := 'StopShow';
+
     FObserverList.AsyncBroadcast(Params);
   finally
     Params.Free;

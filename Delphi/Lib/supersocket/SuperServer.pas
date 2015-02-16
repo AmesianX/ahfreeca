@@ -200,14 +200,12 @@ begin
 
   if Socket = 0 then Exit;
 
-  if Assigned(FOnDisconnected) then FOnDisconnected(Connection);
-
-  SetSocketLingerOption( Socket, 0 );
+  FConnectionList.ReleaseConnection(Connection);
 
   shutdown( Socket, SD_BOTH );
   closesocket( Socket );
 
-  FConnectionList.ReleaseConnection(Connection);
+  if Assigned(FOnDisconnected) then FOnDisconnected(Connection);
 end;
 
 procedure TSuperServer.on_IdleCheck(Sender: TObject);

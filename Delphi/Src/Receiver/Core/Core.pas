@@ -23,8 +23,17 @@ type
 
     class function Obj:TCore;
 
-    procedure Initialize;  /// TCore에서 사용하는 객체들에 대한 초기화.
-    procedure Finalize;  /// TCore에서 사용하는 객체들에 대한 종료 처리.
+    /// TCore에서 사용하는 객체들에 대한 초기화.
+    procedure Initialize;
+
+    /// TCore에서 사용하는 객체들에 대한 종료 처리.
+    procedure Finalize;
+
+    /// 방송을 시작한다.
+    procedure StartShow;
+
+    /// 방송을 종료한다.
+    procedure StopShow;
   published
     property View: TView read FView;
     property Option : TOption read FOption;
@@ -72,9 +81,9 @@ begin
   FView.sp_Finalize;
   FView.Active := false;
 
-  (TVoiceReceiver.Obj as ICore).Finalize;
-  (TVoiceSender.Obj as ICore).Finalize;
-  (TClientUnit.Obj as ICore).Finalize;
+  TVoiceReceiver.Obj.Finalize;
+  TVoiceSender.Obj.Finalize;
+  TClientUnit.Obj.Finalize;
 end;
 
 procedure TCore.Initialize;
@@ -84,9 +93,9 @@ begin
   if FIsInitialized then Exit;
   FIsInitialized := true;
 
-  (TClientUnit.Obj as ICore).Initialize;
-  (TVoiceSender.Obj as ICore).Initialize;
-  (TVoiceReceiver.Obj as ICore).Initialize;
+  TClientUnit.Obj.Initialize;
+  TVoiceSender.Obj.Initialize;
+  TVoiceReceiver.Obj.Initialize;
 
   FView.sp_Initialize;
 end;
@@ -95,6 +104,22 @@ class function TCore.Obj: TCore;
 begin
   if MyObject = nil then MyObject := TCore.Create(nil);
   Result := MyObject;
+end;
+
+procedure TCore.StartShow;
+begin
+  // TODO:
+  TVoiceSender.Obj.Start;
+
+  FView.sp_StartShow;
+end;
+
+procedure TCore.StopShow;
+begin
+  // TODO:
+  TVoiceSender.Obj.Stop;
+
+  FView.sp_StopShow;
 end;
 
 end.

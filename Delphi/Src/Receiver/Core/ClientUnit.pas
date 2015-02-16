@@ -12,10 +12,11 @@ uses
   SysUtils, Classes;
 
 type
-  TClientUnit = class (TInterfaceBase, ICore)
-  private // implementation of ICore
-    procedure Initialize;
-    procedure Finalize;
+  {*
+    클라이언트 소켓들의 관리를 목적으로 만든 클래스이다.
+    소켓은 Text, Voice, Video 가 서도 다른 포트를 사용하고 있다.
+  }
+  TClientUnit = class
   private
     FTextClient : TTextClient;
   private
@@ -30,7 +31,17 @@ type
 
     class function Obj:TClientUnit;
 
+    procedure Initialize;
+    procedure Finalize;
+
+    {*
+      서버에 접속한다.
+      Text, Voice, Video 소켓 전부가 접속되지 않으면 에러처리 한다.
+      에러처리는 sp_Terminate를 이용해서 프로그램을 종료하도록 View 메시지를 보낸다.
+    }
     procedure Connect;
+
+    /// 서버 접속을 종료한다.
     procedure Disconnect;
   public
     property TextClient : ITextClient read GetTextClient;

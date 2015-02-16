@@ -7,6 +7,7 @@ uses
   SysUtils, Classes;
 
 type
+  /// 프로그램의 각종 옵션을 관리하는 클래스
   TOption = class
   private
     FIniFileName : string;
@@ -21,10 +22,16 @@ type
     constructor Create;
     destructor Destroy; override;
   public
+    /// 접속자의 계정 아이디
     property UserID : string read FUserID;
+
+    /// 접속자의 계정 암호
     property UserPW : string read FUserPW;
 
+    /// 채팅 문자 수신 등의 변화에 따라 경고음을 출력 할 것인가?
     property AlarmSound : string read GetAlarmSound write SetAlarmSound;
+
+    /// 채팅 문자의 폰트 크기
     property ChatFontSize : integer read GetChatFontSize write SetChatFontSize;
   end;
 

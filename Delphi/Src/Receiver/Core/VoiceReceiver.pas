@@ -3,15 +3,12 @@ unit VoiceReceiver;
 interface
 
 uses
-  CoreInterface,
   RyuLibBase, VoicePlayer, VoiceZipUtils,
   SysUtils, Classes;
 
 type
-  TVoiceReceiver = class (TInterfaceBase, ICore)
-  private // implementation of ICore
-    procedure Initialize;
-    procedure Finalize;
+  /// 서버로부터 수신한 음성 패킷을 디코딩 및 재생하는 클래스
+  TVoiceReceiver = class
   private
     FVoicePlayer : TVoicePlayer;
   private
@@ -27,14 +24,32 @@ type
 
     class function Obj:TVoiceReceiver;
 
+    procedure Initialize;
+    procedure Finalize;
+
+    /// 음성 재생을 시작한다.  (음성 출력 디바이스 오픈)
     procedure Start;
+
+    /// 음성 재생을 멈춘다.
     procedure Stop;
 
+    {*
+      수신 된 패킷을 재생한다.
+      @param AData 수신 된 데이터의 포인터 주소
+      @Param ASize 수신 된 데이터의 바이트 크기
+    }
     procedure DataIn(AData:pointer; ASize:integer);
   public
+    /// 음소거
     property IsMute : boolean read GetIsMute write SetIsMute;
+
+    /// 출력 볼륨 (Volume > 1.0 이면 증폭)
     property Volume: Single read GetVolume write SetVolume;
+
+    /// 현재 재생되고 있는 소리의 크기
     property VolumeOut : integer read GetVolumeOut;
+
+    /// 버퍼에 쌓여서 아직 출력되고 있지 않는 데이터의 양 (ms 단위)
     property DelayedTime : integer read GetDelayedTime;
   end;
 

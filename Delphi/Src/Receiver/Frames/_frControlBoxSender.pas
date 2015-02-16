@@ -19,9 +19,12 @@ type
     Volume: TMusicTrackBar;
     Timer: TTimer;
     lbVolume: TLabel;
+    btOnAir: TSwitchButton;
+    Image1: TImage;
     procedure btMicClick(Sender: TObject);
     procedure TimerTimer(Sender: TObject);
     procedure VolumeChanged(Sender: TObject);
+    procedure btOnAirClick(Sender: TObject);
   private
     procedure BeforeShow;
     procedure AfterShow;
@@ -58,9 +61,15 @@ end;
 procedure TfrControlBoxSender.btMicClick(Sender: TObject);
 begin
   btMic.SwitchOn := not btMic.SwitchOn;
+  TVoiceSender.Obj.IsMute := not btMic.SwitchOn;
+end;
 
-  if btMic.SwitchOn then TVoiceSender.Obj.Start
-  else TVoiceSender.Obj.Stop;
+procedure TfrControlBoxSender.btOnAirClick(Sender: TObject);
+begin
+  btOnAir.SwitchOn := not btOnAir.SwitchOn;
+
+  if btOnAir.SwitchOn then TCore.Obj.StartShow
+  else TCore.Obj.StopShow;
 end;
 
 constructor TfrControlBoxSender.Create(AOwner: TComponent);
