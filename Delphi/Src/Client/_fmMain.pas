@@ -26,7 +26,8 @@ implementation
 
 uses
   Core, ClientUnit,
-  _frLoginLayout, _fmMain.frLoginedLayout;
+  _fmMain.frLoginLayout,
+  _fmMain.frLoginedLayout;
 
 {$R *.dfm}
 
@@ -41,7 +42,7 @@ begin
   TCore.Obj.View.Add( Self );
   TCore.Obj.Initialize;
 
-  _frLoginLayout.SetLayout( Self );
+  _fmMain.frLoginLayout.SetLayout( Self );
 end;
 
 procedure TfmMain.FormDestroy(Sender: TObject);

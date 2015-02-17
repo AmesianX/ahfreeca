@@ -55,7 +55,7 @@ uses
   ProtocolVoice in '..\..\Lib\ProtocolVoice.pas',
   UserLevel in '..\..\Lib\UserLevel.pas',
   _fmMain.frLoginedLayout in '_fmMain.frLoginedLayout.pas' {frLoginedLayout: TFrame},
-  _frLoginLayout in '_frLoginLayout.pas' {frLoginLayout: TFrame},
+  _fmMain.frLoginLayout in '_fmMain.frLoginLayout.pas' {frLoginLayout: TFrame},
   _frCamPreview in 'Frames\_frCamPreview.pas' {frCamPreview: TFrame};
 
 {$R *.res}
