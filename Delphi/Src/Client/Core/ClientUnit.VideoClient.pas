@@ -9,7 +9,7 @@ uses
   Windows, SysUtils, Classes, TypInfo;
 
 type
-  TVideoClient = class
+  TVideoClient = class (TInterfaceBase, IVideoClient)
   private
   private
     FSocket : TSuperClient;

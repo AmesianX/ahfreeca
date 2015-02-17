@@ -3,6 +3,7 @@ unit Option;
 interface
 
 uses
+  Config,
   Para, Strg, Disk,
   SysUtils, Classes;
 
@@ -11,13 +12,18 @@ type
   TOption = class
   private
     FIniFileName : string;
+    procedure load_IniFile;
   private
     FUserID: string;
     FUserPW: string;
-    function GetChatFontSize: integer;
+    FCamWidth: integer;
+    FCamHeight: integer;
+    FAlarmSound: string;
+    FChatFontSize: integer;
     procedure SetChatFontSize(const Value: integer);
-    function GetAlarmSound: string;
     procedure SetAlarmSound(const Value: string);
+    procedure SetCamHeight(const Value: integer);
+    procedure SetCamWidth(const Value: integer);
   public
     constructor Create;
     destructor Destroy; override;
@@ -29,10 +35,16 @@ type
     property UserPW : string read FUserPW;
 
     /// 채팅 문자 수신 등의 변화에 따라 경고음을 출력 할 것인가?
-    property AlarmSound : string read GetAlarmSound write SetAlarmSound;
+    property AlarmSound : string read FAlarmSound write SetAlarmSound;
 
     /// 채팅 문자의 폰트 크기
-    property ChatFontSize : integer read GetChatFontSize write SetChatFontSize;
+    property ChatFontSize : integer read FChatFontSize write SetChatFontSize;
+
+    /// 캠 화면의 넓이 (픽셀 단위)
+    property CamWidth : integer read FCamWidth write SetCamWidth;
+
+    /// 캠 화면의 높이 (픽셀 단위)
+    property CamHeight : integer read FCamHeight write SetCamHeight;
   end;
 
 implementation
@@ -43,10 +55,11 @@ constructor TOption.Create;
 begin
   inherited;
 
-  FIniFileName := DeleteRight(ParamStr(0), '.') + 'ini';
-
   FUserID := GetSwitchValue('UserID');
   FUserPW := GetSwitchValue('UserPW');
+
+  FIniFileName := DeleteRight(ParamStr(0), '.') + 'ini';
+  load_IniFile;
 end;
 
 destructor TOption.Destroy;
@@ -55,19 +68,30 @@ begin
   inherited;
 end;
 
-function TOption.GetAlarmSound: string;
+procedure TOption.load_IniFile;
 begin
-  Result := IniString( FIniFileName, 'Chat', 'AlarmSound', 'SystemAsterisk' );
-end;
+  FAlarmSound   := IniString(  FIniFileName, 'Chat', 'AlarmSound', 'SystemAsterisk' );
+  FChatFontSize := IniInteger( FIniFileName, 'Chat', 'FontSize',   10 );
 
-function TOption.GetChatFontSize: integer;
-begin
-  Result := IniInteger( FIniFileName, 'Chat', 'FontSize', 10 );
+  FCamWidth  := IniInteger( FIniFileName, 'Cam', 'Width',  VIDEO_WIDTH );
+  FCamHeight := IniInteger( FIniFileName, 'Cam', 'Height', VIDEO_HEIGHT );
 end;
 
 procedure TOption.SetAlarmSound(const Value: string);
 begin
   WriteIniStr( FIniFileName, 'Chat', 'AlarmSound', Value );
+end;
+
+procedure TOption.SetCamHeight(const Value: integer);
+begin
+  FCamHeight := Value;
+  WriteIniInt( FIniFileName, 'Cam', 'Height', Value );
+end;
+
+procedure TOption.SetCamWidth(const Value: integer);
+begin
+  FCamWidth := Value;
+  WriteIniInt( FIniFileName, 'Cam', 'Width', Value );
 end;
 
 procedure TOption.SetChatFontSize(const Value: integer);

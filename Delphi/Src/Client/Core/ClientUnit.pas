@@ -25,6 +25,7 @@ type
     FVideoClient : TVideoClient;
     function GetTextClient: ITextClient;
     function GetVoiceClient: IVoiceClient;
+    function GetVideoClient: IVideoClient;
   public
     constructor Create;
     destructor Destroy; override;
@@ -46,6 +47,7 @@ type
   public
     property TextClient : ITextClient read GetTextClient;
     property VoiceClient : IVoiceClient read GetVoiceClient;
+    property VideoClient : IVideoClient read GetVideoClient;
   end;
 
 implementation
@@ -117,6 +119,11 @@ end;
 function TClientUnit.GetTextClient: ITextClient;
 begin
   Result := FTextClient;
+end;
+
+function TClientUnit.GetVideoClient: IVideoClient;
+begin
+  Result := FVideoClient as IVideoClient;
 end;
 
 function TClientUnit.GetVoiceClient: IVoiceClient;

@@ -42,7 +42,7 @@ type
 implementation
 
 uses
-  ClientUnit, VoiceSender, VoiceReceiver;
+  ClientUnit, VoiceSender, VoiceReceiver, VideoSender;
 
 var
   MyObject : TCore = nil;
@@ -81,6 +81,7 @@ begin
   FView.sp_Finalize;
   FView.Active := false;
 
+  TVideoSender.Obj.Finalize;
   TVoiceReceiver.Obj.Finalize;
   TVoiceSender.Obj.Finalize;
   TClientUnit.Obj.Finalize;
@@ -96,6 +97,7 @@ begin
   TClientUnit.Obj.Initialize;
   TVoiceSender.Obj.Initialize;
   TVoiceReceiver.Obj.Initialize;
+  TVideoSender.Obj.Initialize;
 
   FView.sp_Initialize;
 end;
@@ -108,16 +110,16 @@ end;
 
 procedure TCore.StartShow;
 begin
-  // TODO:
   TVoiceSender.Obj.Start;
+  TVideoSender.Obj.Start;
 
   FView.sp_StartShow;
 end;
 
 procedure TCore.StopShow;
 begin
-  // TODO:
   TVoiceSender.Obj.Stop;
+  TVideoSender.Obj.Stop;
 
   FView.sp_StopShow;
 end;

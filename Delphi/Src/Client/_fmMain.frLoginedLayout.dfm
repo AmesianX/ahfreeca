@@ -12,7 +12,6 @@ object frLoginedLayout: TfrLoginedLayout
     Align = alRight
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitHeight = 600
     object Splitter1: TSplitter
       Left = 0
       Top = 200
@@ -39,7 +38,6 @@ object frLoginedLayout: TfrLoginedLayout
       ParentDoubleBuffered = False
       ParentFont = False
       TabOrder = 0
-      ExplicitTop = 180
       ExplicitWidth = 240
       ExplicitHeight = 200
       inherited Shape1: TShape
@@ -70,7 +68,7 @@ object frLoginedLayout: TfrLoginedLayout
       end
       inherited ImageList: TImageList
         Bitmap = {
-          494C010102000800B00010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C010102000800B40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000001000000001002000000000000010
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -220,9 +218,9 @@ object frLoginedLayout: TfrLoginedLayout
       ParentBackground = False
       ParentDoubleBuffered = False
       TabOrder = 1
-      ExplicitTop = 383
+      ExplicitTop = 203
       ExplicitWidth = 240
-      ExplicitHeight = 217
+      ExplicitHeight = 365
       inherited Shape1: TShape
         Width = 240
         ExplicitWidth = 240
@@ -247,11 +245,11 @@ object frLoginedLayout: TfrLoginedLayout
         Width = 234
         Height = 359
         ExplicitWidth = 234
-        ExplicitHeight = 211
+        ExplicitHeight = 359
         inherited plChatInput: TPanel
           Top = 285
           Width = 234
-          ExplicitTop = 137
+          ExplicitTop = 285
           ExplicitWidth = 234
           inherited edMsg: TMemo
             Width = 228
@@ -266,7 +264,7 @@ object frLoginedLayout: TfrLoginedLayout
           Width = 234
           Height = 285
           ExplicitWidth = 234
-          ExplicitHeight = 137
+          ExplicitHeight = 285
         end
       end
     end
@@ -290,7 +288,11 @@ object frLoginedLayout: TfrLoginedLayout
       ParentColor = False
       TabOrder = 0
       Visible = False
-      ExplicitHeight = 120
+      ExplicitWidth = 800
+      ExplicitHeight = 32
+      inherited BitmapTile1: TBitmapTile
+        Width = 800
+      end
     end
     inline frControlBoxReceiver: TfrControlBoxReceiver
       Left = 0
@@ -303,7 +305,24 @@ object frLoginedLayout: TfrLoginedLayout
       ParentColor = False
       TabOrder = 1
       Visible = False
-      ExplicitHeight = 120
+      ExplicitWidth = 800
+      ExplicitHeight = 32
+      inherited BitmapTile1: TBitmapTile
+        Width = 800
+      end
     end
+  end
+  inline frCamPreview: TfrCamPreview
+    Left = 0
+    Top = 0
+    Width = 560
+    Height = 568
+    Align = alClient
+    Color = clBlack
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 2
+    ExplicitLeft = 104
+    ExplicitTop = 176
   end
 end

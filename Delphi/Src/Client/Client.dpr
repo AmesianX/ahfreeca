@@ -28,9 +28,6 @@ uses
   VideoZip in '..\..\Lib\videozip\VideoZip.pas',
   VideoZipPacketSlice in '..\..\Lib\videozip\VideoZipPacketSlice.pas',
   VideoZipUtils in '..\..\Lib\videozip\VideoZipUtils.pas',
-  AudioDecoder.AudioOut in '..\..\Lib\voicezip\AudioDecoder.AudioOut.pas',
-  AudioDecoder in '..\..\Lib\voicezip\AudioDecoder.pas',
-  DelayRemover in '..\..\Lib\voicezip\DelayRemover.pas',
   EchoCancel in '..\..\Lib\voicezip\EchoCancel.pas',
   msacm2 in '..\..\Lib\voicezip\msacm2.pas',
   SoundTouchDLL in '..\..\Lib\voicezip\SoundTouchDLL.pas',
@@ -56,7 +53,8 @@ uses
   UserLevel in '..\..\Lib\UserLevel.pas',
   _fmMain.frLoginedLayout in '_fmMain.frLoginedLayout.pas' {frLoginedLayout: TFrame},
   _fmMain.frLoginLayout in '_fmMain.frLoginLayout.pas' {frLoginLayout: TFrame},
-  _frCamPreview in 'Frames\_frCamPreview.pas' {frCamPreview: TFrame};
+  _frCamPreview in 'Frames\_frCamPreview.pas' {frCamPreview: TFrame},
+  VideoSender in 'Core\VideoSender.pas';
 
 {$R *.res}
 

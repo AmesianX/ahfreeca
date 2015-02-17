@@ -6,7 +6,8 @@ uses
   FrameBase, ValueList, RyuGraphics, Para,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.jpeg,
-  Vcl.ExtCtrls, _frChat, _frUserList, _frControlBoxSender, _frControlBoxReceiver;
+  Vcl.ExtCtrls, _frChat, _frUserList, _frControlBoxSender, _frControlBoxReceiver,
+  _frCamPreview;
 
 type
   TfrLoginedLayout = class(TFrame, IFrameBase)
@@ -17,6 +18,7 @@ type
     frUserList: TfrUserList;
     frControlBoxSender: TfrControlBoxSender;
     frControlBoxReceiver: TfrControlBoxReceiver;
+    frCamPreview: TfrCamPreview;
   private
     procedure BeforeShow;
     procedure AfterShow;

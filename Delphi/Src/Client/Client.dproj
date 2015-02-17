@@ -74,6 +74,7 @@
         <DCC_RemoteDebug>true</DCC_RemoteDebug>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <Debugger_RunParams>start Client.exe -IsSender -UserID=Ryu -UserPW=1234</Debugger_RunParams>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
@@ -136,9 +137,6 @@
         <DCCReference Include="..\..\Lib\videozip\VideoZip.pas"/>
         <DCCReference Include="..\..\Lib\videozip\VideoZipPacketSlice.pas"/>
         <DCCReference Include="..\..\Lib\videozip\VideoZipUtils.pas"/>
-        <DCCReference Include="..\..\Lib\voicezip\AudioDecoder.AudioOut.pas"/>
-        <DCCReference Include="..\..\Lib\voicezip\AudioDecoder.pas"/>
-        <DCCReference Include="..\..\Lib\voicezip\DelayRemover.pas"/>
         <DCCReference Include="..\..\Lib\voicezip\EchoCancel.pas"/>
         <DCCReference Include="..\..\Lib\voicezip\msacm2.pas"/>
         <DCCReference Include="..\..\Lib\voicezip\SoundTouchDLL.pas"/>
@@ -177,6 +175,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
+        <DCCReference Include="Core\VideoSender.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
