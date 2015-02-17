@@ -1,8 +1,8 @@
 object frCamPreview: TfrCamPreview
   Left = 0
   Top = 0
-  Width = 636
-  Height = 468
+  Width = 800
+  Height = 600
   Color = clBlack
   ParentBackground = False
   ParentColor = False
@@ -11,20 +11,18 @@ object frCamPreview: TfrCamPreview
   object plClient: TPanel
     Left = 0
     Top = 41
-    Width = 636
-    Height = 427
+    Width = 800
+    Height = 559
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitLeft = 248
-    ExplicitTop = 212
-    ExplicitWidth = 377
-    ExplicitHeight = 253
+    ExplicitWidth = 636
+    ExplicitHeight = 427
   end
   object BitmapTile1: TBitmapTile
     Left = 0
     Top = 0
-    Width = 636
+    Width = 800
     Height = 41
     Align = alTop
     Bitmap.Data = {
@@ -36,9 +34,7 @@ object frCamPreview: TfrCamPreview
       1F1F1F1F1F1F1F1F1F1F1F1F1C1C1C0303031C1C1C1F1F1F1F1F1F1F1F1F1F1F
       1F1F1F1F1F1F1F1C1C1C1F1F1F1F1F1F1F1F1F1C1C1C1C1C1C1F1F1F1F1F1F1F
       1F1F1F1F1F1F1F1F1C1C1C0303030303031C1C1C1F1F1F1F1F1F}
-    ExplicitLeft = 104
-    ExplicitTop = 16
-    ExplicitWidth = 185
+    ExplicitWidth = 636
     object btCamOn: TButton
       Left = 8
       Top = 10

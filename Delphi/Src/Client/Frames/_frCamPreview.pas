@@ -4,7 +4,7 @@ interface
 
 uses
   Config, EasyCam,
-  FrameBase, ValueList, glCanvas, RyuGraphics,
+  FrameBase, ValueList, RyuGraphics,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.jpeg,
   Vcl.ExtCtrls, Vcl.StdCtrls, BitmapTile;
@@ -26,7 +26,7 @@ type
     procedure BeforeClose;
   private
     FEasyCam : TEasyCam;
-    procedure do_Resize_glCanvas;
+    procedure do_Resize;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -78,7 +78,7 @@ begin
   FEasyCam := TEasyCam.Create(Self);
   FEasyCam.Parent := plClient;
 
-  do_Resize_glCanvas;
+  do_Resize;
 end;
 
 destructor TfrCamPreview.Destroy;
@@ -90,11 +90,11 @@ begin
   inherited;
 end;
 
-procedure TfrCamPreview.do_Resize_glCanvas;
+procedure TfrCamPreview.do_Resize;
 var
   ptResult : TPoint;
 begin
-  // Cam 화면의 비율에 맞춰서 plClient 크기 만큼 glCanvas의 크기를 조절한다.  (사방 3 픽셀 여유를 둠)
+  // 비율에 맞춰서 화면 크기 만큼 glCanvas의 크기를 조절한다.  (사방 3 픽셀 여유를 둠)
   ptResult :=
     RatioSize(
       Point(TCore.Obj.Option.CamWidth-6, TCore.Obj.Option.CamHeight-6),
@@ -103,14 +103,14 @@ begin
   FEasyCam.Width  := ptResult.X;
   FEasyCam.Height := ptResult.Y;
 
-  // plClient 가운데로 이동한다.
+  // 화면 가운데로 이동한다.
   FEasyCam.Left := (plClient.Width  div 2) - (FEasyCam.Width  div 2);
   FEasyCam.Top  := (plClient.Height div 2) - (FEasyCam.Height div 2);
 end;
 
 procedure TfrCamPreview.FrameResize(Sender: TObject);
 begin
-  do_Resize_glCanvas;
+  do_Resize;
 end;
 
 procedure TfrCamPreview.TimerTimer(Sender: TObject);

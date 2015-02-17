@@ -54,7 +54,9 @@ uses
   _fmMain.frLoginedLayout in '_fmMain.frLoginedLayout.pas' {frLoginedLayout: TFrame},
   _fmMain.frLoginLayout in '_fmMain.frLoginLayout.pas' {frLoginLayout: TFrame},
   _frCamPreview in 'Frames\_frCamPreview.pas' {frCamPreview: TFrame},
-  VideoSender in 'Core\VideoSender.pas';
+  VideoSender in 'Core\VideoSender.pas',
+  VideoReceiver in 'Core\VideoReceiver.pas',
+  _frCamScreen in 'Frames\_frCamScreen.pas' {frCamScreen: TFrame};
 
 {$R *.res}
 

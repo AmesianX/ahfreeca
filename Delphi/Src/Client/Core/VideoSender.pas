@@ -3,11 +3,15 @@ unit VideoSender;
 interface
 
 uses
-  Config,
+  Config, ProtocolVideo,
   Scheduler, VideoZip, RyuGraphics,
   SysUtils, Classes, Graphics;
 
 type
+  {*
+    Cam 화면을 압축하는 클래스.
+    TClientUnit.Obj.VideoClient.SendVideo()를 이용해서 압축 데이터를 전송한다.
+  }
   TVideoSender = class
   private
     FBitmap : TBitmap;
@@ -30,9 +34,13 @@ type
     procedure Initialize;
     procedure Finalize;
 
+    /// 캠 화면 압축 준비를 한다.
     procedure Start;
+
+    /// 캠 화면 압축을 종료 한다.
     procedure Stop;
 
+    /// 압축 할 캠 화면을 입력 한다.
     procedure DataIn(ABitmap:TBitmap);
   end;
 
@@ -64,7 +72,13 @@ begin
 end;
 
 procedure TVideoSender.on_FScheduler_Start(Sender: TObject);
+var
+  Header : TVPX_Header;
 begin
+  Header.Width  := TCore.Obj.Option.CamWidth;
+  Header.Height := TCore.Obj.Option.CamHeight;
+  TClientUnit.Obj.VideoClient.SendHeader( @Header, SizeOf(Header) );
+
   FEncoder.Width  := TCore.Obj.Option.CamWidth;
   FEncoder.Height := TCore.Obj.Option.CamHeight;
   FEncoder.Open;

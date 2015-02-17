@@ -23,10 +23,14 @@ type
     function Connect:boolean;
     procedure Disconnect;
 
+    procedure SendHeader(AData:pointer; ASize:integer);
     procedure SendVideo(AData:pointer; ASize:integer);
   end;
 
 implementation
+
+uses
+  VideoReceiver;
 
 { TVideoClient }
 
@@ -84,8 +88,20 @@ begin
   Trace( Format('TVideoClient.on_FSocket_Received - PacketType: %s', [sPacketType]) );
   {$ENDIF}
 
-//  case TPacketType(CustomHeader.PacketType) of
-//  end;
+  case TPacketType(CustomHeader.PacketType) of
+    ptVPX_Header, ptVPX: TVideoReceiver.Obj.DataIn( CustomHeader.PacketType, AData, ASize );
+  end;
+end;
+
+procedure TVideoClient.SendHeader(AData: pointer; ASize: integer);
+var
+  CustomHeader : TCustomHeader;
+begin
+  CustomHeader.Init;
+  CustomHeader.Direction := pdSendToOther;
+  CustomHeader.PacketType := Byte( ptVPX_Header );
+
+  FSocket.SendNow( CustomHeader.ToDWord, AData, ASize );
 end;
 
 procedure TVideoClient.SendVideo(AData: pointer; ASize: integer);

@@ -68,7 +68,7 @@ object frLoginedLayout: TfrLoginedLayout
       end
       inherited ImageList: TImageList
         Bitmap = {
-          494C010102000800B40010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+          494C010102000800B80010001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
           0000000000003600000028000000400000001000000001002000000000000010
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000000000000000
@@ -292,6 +292,7 @@ object frLoginedLayout: TfrLoginedLayout
       ExplicitHeight = 32
       inherited BitmapTile1: TBitmapTile
         Width = 800
+        ExplicitWidth = 800
       end
     end
     inline frControlBoxReceiver: TfrControlBoxReceiver
@@ -309,6 +310,7 @@ object frLoginedLayout: TfrLoginedLayout
       ExplicitHeight = 32
       inherited BitmapTile1: TBitmapTile
         Width = 800
+        ExplicitWidth = 800
       end
     end
   end
@@ -322,7 +324,30 @@ object frLoginedLayout: TfrLoginedLayout
     ParentBackground = False
     ParentColor = False
     TabOrder = 2
-    ExplicitLeft = 104
-    ExplicitTop = 176
+    Visible = False
+    ExplicitWidth = 560
+    ExplicitHeight = 568
+    inherited plClient: TPanel
+      Width = 560
+      Height = 527
+      ExplicitWidth = 560
+      ExplicitHeight = 527
+    end
+    inherited BitmapTile1: TBitmapTile
+      Width = 560
+      ExplicitWidth = 560
+    end
+  end
+  inline frCamScreen: TfrCamScreen
+    Left = 0
+    Top = 0
+    Width = 560
+    Height = 568
+    Align = alClient
+    Color = clBlack
+    ParentBackground = False
+    ParentColor = False
+    TabOrder = 3
+    Visible = False
   end
 end

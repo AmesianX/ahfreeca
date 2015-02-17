@@ -45,6 +45,9 @@ type
   IVideoClient = interface
     ['{796DA8B8-BE99-40F2-8026-AC5AC24C95CA}']
 
+    /// 영상의 헤더 정보를 전송한다.
+    procedure SendHeader(AData:pointer; ASize:integer);
+
     /// 영상 데이터를 전송한다.
     procedure SendVideo(AData:pointer; ASize:integer);
   end;

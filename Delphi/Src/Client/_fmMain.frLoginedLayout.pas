@@ -7,7 +7,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Imaging.jpeg,
   Vcl.ExtCtrls, _frChat, _frUserList, _frControlBoxSender, _frControlBoxReceiver,
-  _frCamPreview;
+  _frCamPreview, _frCamScreen;
 
 type
   TfrLoginedLayout = class(TFrame, IFrameBase)
@@ -19,6 +19,7 @@ type
     frControlBoxSender: TfrControlBoxSender;
     frControlBoxReceiver: TfrControlBoxReceiver;
     frCamPreview: TfrCamPreview;
+    frCamScreen: TfrCamScreen;
   private
     procedure BeforeShow;
     procedure AfterShow;
@@ -83,6 +84,9 @@ begin
 
   frControlBoxSender.Visible   := FindSwitchName('IsSender');
   frControlBoxReceiver.Visible := not FindSwitchName('IsSender');
+
+  frCamPreview.Visible := FindSwitchName('IsSender');
+  frCamScreen.Visible  := not FindSwitchName('IsSender');
 
   TCore.Obj.View.Add(Self);
 end;
