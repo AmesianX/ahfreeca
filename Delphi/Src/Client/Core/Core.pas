@@ -17,6 +17,8 @@ type
   private
     FView: TView;
     FOption: TOption;
+  private
+    FIsShowStarted: boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -37,6 +39,9 @@ type
   published
     property View: TView read FView;
     property Option : TOption read FOption;
+  published
+    /// 방송 중인 가?
+    property IsShowStarted : boolean read FIsShowStarted;
   end;
 
 implementation
@@ -55,6 +60,8 @@ begin
 
   FIsInitialized := false;
   FIsfinalized := false;
+
+  FIsShowStarted := false;
 
   FOption := TOption.Create;
 
@@ -114,10 +121,14 @@ begin
   TVideoSender.Obj.Start;
 
   FView.sp_StartShow;
+
+  FIsShowStarted := true;
 end;
 
 procedure TCore.StopShow;
 begin
+  FIsShowStarted := false;
+
   TVoiceSender.Obj.Stop;
   TVideoSender.Obj.Stop;
 

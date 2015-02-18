@@ -11,8 +11,8 @@ const
   VOICE_SERVER_PORT = 8802;
   VIDEO_SERVER_PORT = 8803;
 
-  VIDEO_WIDTH  = 800;
-  VIDEO_HEIGHT = 600;
+  VIDEO_WIDTH  = 320;
+  VIDEO_HEIGHT = 240;
 
 implementation
 

@@ -16,10 +16,15 @@ type
     plClient: TPanel;
     BitmapTile1: TBitmapTile;
     btCamOff: TButton;
+    cbResolution: TComboBox;
     procedure TimerTimer(Sender: TObject);
     procedure FrameResize(Sender: TObject);
     procedure btCamOnClick(Sender: TObject);
     procedure btCamOffClick(Sender: TObject);
+    procedure cbResolutionKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure cbResolutionKeyPress(Sender: TObject; var Key: Char);
+    procedure cbResolutionChange(Sender: TObject);
   private
     procedure BeforeShow;
     procedure AfterShow;
@@ -30,6 +35,9 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+  published
+    procedure rp_StartShow(Aparams:TValueList);
+    procedure rp_StopShow(Aparams:TValueList);
   end;
 
 implementation
@@ -54,10 +62,12 @@ end;
 procedure TfrCamPreview.btCamOffClick(Sender: TObject);
 begin
   FEasyCam.Close;
+  cbResolution.Enabled := (not TCore.Obj.IsShowStarted) and (not FEasyCam.IsActive);
 end;
 
 procedure TfrCamPreview.btCamOnClick(Sender: TObject);
 begin
+  cbResolution.Enabled := false;
   FEasyCam.Open( TCore.Obj.Option.CamWidth, TCore.Obj.Option.CamHeight);
 end;
 
@@ -66,9 +76,42 @@ begin
 
 end;
 
+procedure TfrCamPreview.cbResolutionChange(Sender: TObject);
+var
+  iWidth, iHeight : integer;
+begin
+  case cbResolution.ItemIndex of
+    0 : begin iWidth :=  320; iHeight := 240; end;
+    1 : begin iWidth :=  640; iHeight := 480; end;
+    2 : begin iWidth := 1024; iHeight := 768; end;
+    3 : begin iWidth := 1280; iHeight := 720; end;
+  end;
+
+  TCore.Obj.Option.CamWidth  := iWidth;
+  TCore.Obj.Option.CamHeight := iHeight;
+end;
+
+procedure TfrCamPreview.cbResolutionKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  Key := 0;
+end;
+
+procedure TfrCamPreview.cbResolutionKeyPress(Sender: TObject; var Key: Char);
+begin
+  Key := #0;
+end;
+
 constructor TfrCamPreview.Create(AOwner: TComponent);
 begin
   inherited;
+
+  case TCore.Obj.Option.CamWidth of
+     640 : cbResolution.ItemIndex := 1;
+    1024 : cbResolution.ItemIndex := 2;
+    1280 : cbResolution.ItemIndex := 3;
+    else cbResolution.ItemIndex := 0;
+  end;
 
   DoubleBuffered := true;
   ControlStyle := ControlStyle + [csOpaque];
@@ -111,6 +154,16 @@ end;
 procedure TfrCamPreview.FrameResize(Sender: TObject);
 begin
   do_Resize;
+end;
+
+procedure TfrCamPreview.rp_StartShow(Aparams: TValueList);
+begin
+  cbResolution.Enabled := false;
+end;
+
+procedure TfrCamPreview.rp_StopShow(Aparams: TValueList);
+begin
+  cbResolution.Enabled := (not TCore.Obj.IsShowStarted) and (not FEasyCam.IsActive);
 end;
 
 procedure TfrCamPreview.TimerTimer(Sender: TObject);

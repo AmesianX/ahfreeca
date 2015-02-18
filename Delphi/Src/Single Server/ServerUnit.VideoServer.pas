@@ -4,18 +4,23 @@ interface
 
 uses
   DebugTools, Config, Protocol, ProtocolVideo,
-  MemoryPool, SuperServer, Connection,
+  MemoryPool, SuperServer, Connection, SyncValues,
   Windows, SysUtils, Classes, TypInfo;
 
 type
   TVideoServer = class
   private
     FMemoryPool : TMemoryPool;
+    FHeader : TSyncData;
   private
     FSocket : TSuperServer;
     procedure on_FSocket_Connected(AConnection:TConnection);
     procedure on_FSocket_Received(AConnection:TConnection; ACustomData:DWord; AData:pointer; ASize:integer);
     procedure on_FSocket_Disconnected(AConnection:TConnection);
+  private
+    procedure rp_VPX_Header(AConnection:TConnection; ACustomHeader:TCustomHeader; AData:pointer; ASize:integer);
+  private
+    procedure sp_VPX_Header(AConnection:TConnection);
   public
     constructor Create(AMemoryPool:TMemoryPool); reintroduce;
     destructor Destroy; override;
@@ -33,6 +38,7 @@ begin
   inherited Create;
 
   FMemoryPool := AMemoryPool;
+  FHeader := TSyncData.Create;
 
   FSocket := TSuperServer.Create(nil, FMemoryPool);
   FSocket.UseNagel := false;
@@ -47,6 +53,7 @@ begin
   Stop;
 
   FreeAndNil(FSocket);
+  FreeAndNil(FHeader);
 
   inherited;
 end;
@@ -55,6 +62,8 @@ procedure TVideoServer.on_FSocket_Connected(AConnection: TConnection);
 begin
   // TODO: Text 로그인 시 RandomPW 발생하여 처리
   AConnection.IsLogined := true;
+
+  sp_VPX_Header( AConnection );
 end;
 
 procedure TVideoServer.on_FSocket_Disconnected(AConnection: TConnection);
@@ -78,8 +87,9 @@ begin
       pdSentToID: FSocket.SendToConnectionID( CustomHeader.ID, ACustomData, AData, ASize );
     end;
 
-//    case TPacketType(CustomHeader.PacketType) of
-//    end;
+    case TPacketType(CustomHeader.PacketType) of
+      ptVPX_Header: rp_VPX_Header( AConnection, CustomHeader, AData, ASize );
+    end;
   except
      on E : Exception do begin
        Trace( 'TVideoServer.on_FSocket_Received: ' + E.Message );
@@ -87,6 +97,29 @@ begin
 
        AConnection.Disconnect;
      end;
+  end;
+end;
+
+procedure TVideoServer.rp_VPX_Header(AConnection: TConnection;
+  ACustomHeader: TCustomHeader; AData: pointer; ASize: integer);
+begin
+  FHeader.SetValue( AData, ASize );
+end;
+
+procedure TVideoServer.sp_VPX_Header(AConnection: TConnection);
+var
+  Data : pointer;
+  Size : integer;
+  CustomHeader : TCustomHeader;
+begin
+  CustomHeader.Init;
+  CustomHeader.PacketType := Byte( ptVPX_Header );
+
+  FHeader.GetValue( Data, Size );
+  try
+    AConnection.Send( CustomHeader.ToDWord, Data, Size );
+  finally
+    if Data <> nil then FreeMem(Data);
   end;
 end;
 

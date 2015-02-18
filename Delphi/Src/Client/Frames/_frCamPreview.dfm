@@ -16,8 +16,6 @@ object frCamPreview: TfrCamPreview
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 636
-    ExplicitHeight = 427
   end
   object BitmapTile1: TBitmapTile
     Left = 0
@@ -34,10 +32,9 @@ object frCamPreview: TfrCamPreview
       1F1F1F1F1F1F1F1F1F1F1F1F1C1C1C0303031C1C1C1F1F1F1F1F1F1F1F1F1F1F
       1F1F1F1F1F1F1F1C1C1C1F1F1F1F1F1F1F1F1F1C1C1C1C1C1C1F1F1F1F1F1F1F
       1F1F1F1F1F1F1F1F1C1C1C0303030303031C1C1C1F1F1F1F1F1F}
-    ExplicitWidth = 636
     object btCamOn: TButton
       Left = 8
-      Top = 10
+      Top = 9
       Width = 75
       Height = 25
       Caption = 'Cam On'
@@ -52,6 +49,23 @@ object frCamPreview: TfrCamPreview
       Caption = 'Cam Off'
       TabOrder = 1
       OnClick = btCamOffClick
+    end
+    object cbResolution: TComboBox
+      Left = 180
+      Top = 11
+      Width = 145
+      Height = 21
+      ImeName = 'Microsoft IME 2010'
+      TabOrder = 2
+      Text = '320 x 240'
+      OnChange = cbResolutionChange
+      OnKeyDown = cbResolutionKeyDown
+      OnKeyPress = cbResolutionKeyPress
+      Items.Strings = (
+        '320 x 240'
+        '640 x 480'
+        '1024 x 768'
+        '1280 x 720')
     end
   end
   object Timer: TTimer
