@@ -29,6 +29,9 @@ type
     destructor Destroy; override;
   end;
 
+/// 미리 객체를 생성하여 View 메시지를 수신 할 수 있는 상태를 만든다.
+procedure Prepare(ATarget:TForm);
+
 procedure SetLayout(ATarget:TForm);
 
 implementation
@@ -38,6 +41,11 @@ uses
 
 var
   frLoginedLayout : TfrLoginedLayout = nil;
+
+procedure Prepare(ATarget:TForm);
+begin
+  if frLoginedLayout = nil then frLoginedLayout := TfrLoginedLayout.Create(ATarget);
+end;
 
 procedure SetLayout(ATarget:TForm);
 var

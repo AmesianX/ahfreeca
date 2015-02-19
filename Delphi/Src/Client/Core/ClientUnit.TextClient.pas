@@ -16,6 +16,9 @@ type
     procedure sp_Mute(AUserID:string; AMute:boolean);
     procedure sp_Chat(AFromID,AMsg:string; AColor:TColor);
     procedure sp_Whisper(AFromID,AUserIDs,AMsg:string; AColor:TColor);
+    procedure sp_OnAir;
+    procedure sp_OffAir;
+
     procedure GetUserList(AListView:TListView);
     function GetUserMuteStatus(AUserID:string):boolean;
     function GetIsSender:boolean;
@@ -177,15 +180,12 @@ end;
 
 procedure TTextClient.sp_AskUserList;
 var
-  Dummy : byte;
   CustomHeader : TCustomHeader;
 begin
   CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptAskUserList );
 
-  // SuperSocket은 Zero-byte Data를 허용하지 않는다.
-  // 따라서, PacketType만 보내서는 안되며, 더미라도 함께 보내야 한다.
-  FSocket.SendNow( CustomHeader.ToDWord, @Dummy, SizeOf(Dummy) );
+  FSocket.SendNow( CustomHeader.ToDWord );
 end;
 
 procedure TTextClient.sp_Chat(AFromID, AMsg: string; AColor: TColor);
@@ -266,6 +266,28 @@ begin
   finally
     ValueList.Free;
   end;
+end;
+
+procedure TTextClient.sp_OffAir;
+var
+  CustomHeader : TCustomHeader;
+begin
+  CustomHeader.Init;
+  CustomHeader.PacketType := Byte( ptOffAir );
+  CustomHeader.Direction := pdSendToOther;
+
+  FSocket.SendNow( CustomHeader.ToDWord );
+end;
+
+procedure TTextClient.sp_OnAir;
+var
+  CustomHeader : TCustomHeader;
+begin
+  CustomHeader.Init;
+  CustomHeader.PacketType := Byte( ptOnAir );
+  CustomHeader.Direction := pdSendToOther;
+
+  FSocket.SendNow( CustomHeader.ToDWord );
 end;
 
 procedure TTextClient.sp_Whisper(AFromID, AUserIDs, AMsg: string; AColor: TColor);

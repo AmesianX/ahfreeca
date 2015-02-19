@@ -4,7 +4,7 @@ interface
 
 uses
   DebugTools, SuperSocketUtils, Connection, IOCP_Utils, MemoryPool,
-  SimpleThread, ThreadPool,
+  SimpleThread, ThreadPool, Strg,
   Windows, Messages, Classes, SysUtils, WinSock2, ExtCtrls, AnsiStrings;
 
 type
@@ -64,13 +64,25 @@ type
     procedure SendToAll(APacket:pointer); overload;
 
     /// 전체 사용자에게 데이타를 전달한다.  메모리 복사가 일어난다.
+    procedure SendToAll(ACustomData:DWord); overload;
+
+    /// 전체 사용자에게 데이타를 전달한다.  메모리 복사가 일어난다.
     procedure SendToAll(ACustomData:DWord; AData:pointer; ASize:integer); overload;
+
+    /// 전체 사용자에게 데이타를 전달한다.  메모리 복사가 일어난다.
+    procedure SendToAll(ACustomData:DWord; AText:string); overload;
 
     /// 자신 이외의 전체 사용자에게 패킷([Header] [Data])을 전달한다.  메모리 복사가 일어나지 않는다.
     procedure SendToOther(AConnection:TConnection; APacket:pointer); overload;
 
     /// 자신 이외의 전체 사용자에게 데이타를 전달한다.  메모리 복사가 일어난다.
+    procedure SendToOther(AConnection:TConnection; ACustomData:DWord); overload;
+
+    /// 자신 이외의 전체 사용자에게 데이타를 전달한다.  메모리 복사가 일어난다.
     procedure SendToOther(AConnection:TConnection; ACustomData:DWord; AData:pointer; ASize:integer); overload;
+
+    /// 자신 이외의 전체 사용자에게 데이타를 전달한다.  메모리 복사가 일어난다.
+    procedure SendToOther(AConnection:TConnection; ACustomData:DWord; AText:string); overload;
 
     /// 지정 된 AConnectionID의 사용자에게 패킷([Header] [Data])을 전달한다.  메모리 복사가 일어나지 않는다.
     procedure SendToConnectionID(AConnectionID:integer; APacket:pointer); overload;
@@ -391,6 +403,28 @@ begin
   if Connection <> nil then Connection.Send(APacket);
 end;
 
+procedure TSuperServer.SendToAll(ACustomData: DWord);
+var
+  Dummy : byte;
+begin
+  // SuperSocket은 Zero-byte Data를 허용하지 않는다.
+  // 따라서, PacketType만 보내서는 안되며, 더미라도 함께 보내야 한다.
+  SendToAll( ACustomData, @Dummy, SizeOf(Dummy) );
+end;
+
+procedure TSuperServer.SendToAll(ACustomData: DWord; AText: string);
+var
+  Data : pointer;
+  Size : integer;
+begin
+  TextToData( AText, Data, Size );
+  try
+    SendToAll( ACustomData, Data, Size );
+  finally
+    if Data <> nil then FreeMem(Data);
+  end;
+end;
+
 procedure TSuperServer.SendToConnectionID(AConnectionID: integer;
   ACustomData: DWord; AData: pointer; ASize: integer);
 var
@@ -401,6 +435,28 @@ begin
 
   Connection := FConnectionList.FindConnection(AConnectionID);
   if Connection <> nil then Connection.Send(pPacket);
+end;
+
+procedure TSuperServer.SendToOther(AConnection: TConnection; ACustomData: DWord);
+var
+  Dummy : byte;
+begin
+  // SuperSocket은 Zero-byte Data를 허용하지 않는다.
+  // 따라서, PacketType만 보내서는 안되며, 더미라도 함께 보내야 한다.
+  SendToOther( AConnection, ACustomData, @Dummy, SizeOf(Dummy) );
+end;
+
+procedure TSuperServer.SendToOther(AConnection: TConnection; ACustomData: DWord; AText: string);
+var
+  Data : pointer;
+  Size : integer;
+begin
+  TextToData( AText, Data, Size );
+  try
+    SendToOther( AConnection, ACustomData, Data, Size );
+  finally
+    if Data <> nil then FreeMem(Data);
+  end;
 end;
 
 procedure TSuperServer.SendToOther(AConnection: TConnection;

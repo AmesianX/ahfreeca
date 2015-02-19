@@ -85,7 +85,7 @@ begin
   sPacketType := GetEnumName(TypeInfo(TPacketType), CustomHeader.PacketType);
 
   {$IFDEF DEBUG}
-  Trace( Format('TVideoClient.on_FSocket_Received - PacketType: %s', [sPacketType]) );
+//  Trace( Format('TVideoClient.on_FSocket_Received - PacketType: %s', [sPacketType]) );
   {$ENDIF}
 
   case TPacketType(CustomHeader.PacketType) of

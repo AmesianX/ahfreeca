@@ -40,6 +40,10 @@ type
 
     procedure Disconnect(AConnection:TObject);
 
+    {*
+      SuperSocket에서 Send는 일반적으로 [ASize] [Header] [AData] 형식의 데이터를 생성해서 보낸다.
+      ISuperSocketServer.Send는 ABuffer ABufferSize 전송한다.  (다른 일반적인 소켓의 처리 방식과 동일)
+    }
     procedure Send(AConnection:TObject; ASocket:integer; ABuffer:pointer; ABufferSize:integer);
 
     procedure FireReceivedEvent(AConnection:TObject; ACustomData:DWord; AData:pointer; ASize:integer);

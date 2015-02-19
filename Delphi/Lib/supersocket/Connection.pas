@@ -3,7 +3,7 @@
 interface
 
 uses
-  DebugTools, SuperSocketUtils, RyuLibBase, PacketReader,
+  DebugTools, SuperSocketUtils, RyuLibBase, PacketReader, Strg,
   Windows, SysUtils, Classes, WinSock2, SyncObjs;
 
 type
@@ -60,9 +60,22 @@ type
 
     function GetUserInfo:string; virtual;
 
+    {*
+      SuperSocket에서 Send는 일반적으로 [ASize] [Header] [AData] 형식의 데이터를 생성해서 보낸다.
+      SendRaw는 AData위치에서 ASize만큼 전송한다.  (다른 일반적인 소켓의 처리 방식과 동일)
+    }
     procedure SendRaw(AData:pointer; ASize:integer);
 
+    {*
+      데이터는 없이 [Size:word=0] [Header:DWord] [Dummy] 와 같이 7바이트만 전송한다.
+      다만, SuperSocket은 Zero-byte Data를 허용하지 않는다.
+      따라서, PacketType만 보내서는 안되며, 더미를 함께 보낸다.
+    }
+    procedure Send(ACustomData:DWord); overload;
+
     procedure Send(ACustomData:DWord; AData:pointer; ASize:integer); overload;
+
+    procedure Send(ACustomData:DWord; AText:string); overload;
 
     /// [Packet] = [Header:TRyuSocketPacketHeader] [Data]
     procedure Send(APacket:pointer); overload;
@@ -303,12 +316,34 @@ begin
   FSuperSocketServer.Send( Self, FSocket, APacket, pHeader^.Size + SizeOf(TSuperSocketPacketHeader) );
 end;
 
+procedure TConnection.Send(ACustomData: DWord);
+var
+  Dummy : byte;
+begin
+  // SuperSocket은 Zero-byte Data를 허용하지 않는다.
+  // 따라서, PacketType만 보내서는 안되며, 더미라도 함께 보내야 한다.
+  Send( ACustomData, @Dummy, SizeOf(Dummy) );
+end;
+
 procedure TConnection.Send(ACustomData: DWord; AData: pointer; ASize: integer);
 var
   pPacket : PSuperSocketPacket;
 begin
   pPacket := FSuperSocketServer.GetPacket( ACustomData, AData, ASize );
   Send( pPacket );
+end;
+
+procedure TConnection.Send(ACustomData: DWord; AText: string);
+var
+  Data : pointer;
+  Size : integer;
+begin
+  TextToData( AText, Data, Size );
+  try
+    Send( ACustomData, Data, Size );
+  finally
+    if Data <> nil then FreeMem(Data);
+  end;
 end;
 
 procedure TConnection.SendRaw(AData: pointer; ASize: integer);

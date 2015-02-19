@@ -68,7 +68,7 @@ var
   CustomHeader : TCustomHeader absolute ACustomData;
 begin
   {$IFDEF DEBUG}
-  Trace( Format('TVoiceServer.on_FSocket_Received - PacketType: %s', [GetEnumName(TypeInfo(TPacketType), CustomHeader.PacketType)]) );
+//  Trace( Format('TVoiceServer.on_FSocket_Received - PacketType: %s', [GetEnumName(TypeInfo(TPacketType), CustomHeader.PacketType)]) );
   {$ENDIF}
 
   try

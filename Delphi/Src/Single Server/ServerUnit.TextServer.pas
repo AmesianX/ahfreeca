@@ -5,13 +5,15 @@ interface
 uses
   DebugTools, Config, Protocol, ProtocolText, UserLevel, UserList,
   MemoryPool, SuperServer, Connection,
-  Strg, ValueList, IdURI,
+  Strg, ValueList, SyncValues,
+  IdURI,
   Windows, SysUtils, Classes, TypInfo;
 
 type
   TTextServer = class
   private
     FMemoryPool : TMemoryPool;
+    FIsOnAir : TSyncBoolean;
   private
     FUserList : TUserList;
     procedure on_FUserList_UserIn(Sender:TObject; AConnection:TConnection);
@@ -50,6 +52,9 @@ type
     procedure sp_UserIn(AConnection:TConnection);
     procedure sp_UserOut(AConnection:TConnection);
     procedure sp_UserList(AConnection:TConnection; const AUserList:string);
+
+    // 현재 OnAir 상태인지를 접속한 클라이언트에게 알려준다.
+    procedure sp_OnAirStatus(AConnection:TConnection); overload;
   public
     constructor Create(AMemoryPool:TMemoryPool); reintroduce;
     destructor Destroy; override;
@@ -71,6 +76,9 @@ begin
 
   FMemoryPool := AMemoryPool;
 
+  FIsOnAir := TSyncBoolean.Create;
+  FIsOnAir.SetValue( false );
+
   FUserList := TUserList.Create;
   FUserList.OnUserIn := on_FUserList_UserIn;
   FUserList.OnUserOut := on_FUserList_UserOut;
@@ -88,6 +96,7 @@ destructor TTextServer.Destroy;
 begin
   Stop;
 
+  FreeAndNil(FIsOnAir);
   FreeAndNil(FUserList);
   FreeAndNil(FSocket);
 
@@ -158,6 +167,7 @@ procedure TTextServer.on_FUserList_UserIn(Sender: TObject;
 begin
   sp_OkLogin( AConnection );
   sp_UserIn( AConnection );
+  sp_OnAirStatus( AConnection );
 end;
 
 procedure TTextServer.on_FUserList_UserOut(Sender: TObject;
@@ -300,13 +310,25 @@ end;
 procedure TTextServer.rp_OffAir(AConnection: TConnection;
   ACustomHeader: TCustomHeader; AData: pointer; ASize: integer);
 begin
-
+  FIsOnAir.Lock;
+  try
+    FIsOnAir.TagObject := nil;
+    FIsOnAir.Value := false;
+  finally
+    FIsOnAir.Unlock;
+  end;
 end;
 
 procedure TTextServer.rp_OnAir(AConnection: TConnection;
   ACustomHeader: TCustomHeader; AData: pointer; ASize: integer);
 begin
-
+  FIsOnAir.Lock;
+  try
+    FIsOnAir.TagObject := AConnection;
+    FIsOnAir.Value := true;
+  finally
+    FIsOnAir.Unlock;
+  end;
 end;
 
 procedure TTextServer.rp_SetUserModeToSender(AConnection: TConnection;
@@ -329,102 +351,102 @@ end;
 
 procedure TTextServer.sp_ErLogin(AConnection: TConnection; AErrorMsg: string);
 var
-  Data : pointer;
-  Size : integer;
   CustomHeader : TCustomHeader;
 begin
+  CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptErLogin );
 
-  TextToData( 'Msg=' + AErrorMsg, Data, Size );
-  try
-    AConnection.Send( CustomHeader.ToDWord, Data, Size );
-  finally
-    if Data <> nil then FreeMem(Data);
-  end;
+  AConnection.Send( CustomHeader.ToDWord, 'Msg=' + AErrorMsg );
 end;
 
 procedure TTextServer.sp_ErVersion(AConnection: TConnection);
 var
-  Dummy : byte;
   CustomHeader : TCustomHeader;
 begin
+  CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptErVersion );
 
-  AConnection.Send( CustomHeader.ToDWord, @Dummy, SizeOf(Dummy) );
+  AConnection.Send( CustomHeader.ToDWord );
 end;
 
 procedure TTextServer.sp_IDinUse(AConnection: TConnection);
 var
-  Dummy : byte;
   CustomHeader : TCustomHeader;
 begin
+  CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptIDinUse );
 
-  AConnection.Send( CustomHeader.ToDWord, @Dummy, SizeOf(Dummy) );
+  AConnection.Send( CustomHeader.ToDWord );
 end;
 
 procedure TTextServer.sp_OkLogin(AConnection: TConnection);
 var
-  Data : pointer;
-  Size : integer;
   CustomHeader : TCustomHeader;
 begin
+  CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptOkLogin );
 
-  TextToData( AConnection.GetUserInfo, Data, Size );
+  AConnection.Send( CustomHeader.ToDWord, AConnection.GetUserInfo );
+end;
+
+procedure TTextServer.sp_OnAirStatus(AConnection: TConnection);
+var
+  CustomHeader : TCustomHeader;
+begin
+  CustomHeader.Init;
+
+  FIsOnAir.Lock;
   try
-    AConnection.Send( CustomHeader.ToDWord, Data, Size );
+    if FIsOnAir.Value then CustomHeader.PacketType := byte( ptOnAir)
+    else CustomHeader.PacketType := byte( ptOffAir);
+
+    AConnection.Send( CustomHeader.ToDWord );
   finally
-    if Data <> nil then FreeMem(Data);
+    FIsOnAir.Unlock;
   end;
 end;
 
 procedure TTextServer.sp_UserIn(AConnection: TConnection);
 var
-  Data : pointer;
-  Size : integer;
   CustomHeader : TCustomHeader;
 begin
+  CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptUserIn );
 
-  TextToData( AConnection.GetUserInfo, Data, Size );
-  try
-    FSocket.SendToOther( AConnection, CustomHeader.ToDWord, Data, Size );
-  finally
-    if Data <> nil then FreeMem(Data);
-  end;
+  FSocket.SendToOther( AConnection, CustomHeader.ToDWord,  AConnection.GetUserInfo );
 end;
 
-procedure TTextServer.sp_UserList(AConnection: TConnection;
-  const AUserList: string);
+procedure TTextServer.sp_UserList(AConnection: TConnection; const AUserList: string);
 var
-  Data : pointer;
-  Size : integer;
   CustomHeader : TCustomHeader;
 begin
+  CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptUserList );
 
-  TextToData( AUserList, Data, Size );
-  try
-    AConnection.Send( CustomHeader.ToDWord, Data, Size );
-  finally
-    if Data <> nil then FreeMem(Data);
-  end;
+  AConnection.Send( CustomHeader.ToDWord, AUserList );
 end;
 
 procedure TTextServer.sp_UserOut(AConnection: TConnection);
 var
-  Data : pointer;
-  Size : integer;
   CustomHeader : TCustomHeader;
 begin
+  CustomHeader.Init;
   CustomHeader.PacketType := Byte( ptUserOut );
 
-  TextToData( AConnection.GetUserInfo, Data, Size );
+  FSocket.SendToOther( AConnection, CustomHeader.ToDWord, AConnection.GetUserInfo );
+
+  FIsOnAir.Lock;
   try
-    FSocket.SendToOther( AConnection, CustomHeader.ToDWord, Data, Size );
+    if AConnection = FIsOnAir.TagObject then begin
+      FIsOnAir.Value := false;
+
+      CustomHeader.Init;
+      CustomHeader.PacketType := Byte( ptOffAir );
+
+      FSocket.SendToOther( AConnection, CustomHeader.ToDWord );
+    end;
   finally
-    if Data <> nil then FreeMem(Data);
+    FIsOnAir.Unlock;
   end;
 end;
 

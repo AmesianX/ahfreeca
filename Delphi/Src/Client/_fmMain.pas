@@ -42,6 +42,8 @@ begin
   TCore.Obj.View.Add( Self );
   TCore.Obj.Initialize;
 
+  _fmMain.frLoginedLayout.Prepare(Self);
+
   _fmMain.frLoginLayout.SetLayout( Self );
 end;
 

@@ -30,6 +30,9 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+  published
+    procedure rp_OnAir(AParams:TValueList);
+    procedure rp_OffAir(AParams:TValueList);
   end;
 
 implementation
@@ -74,6 +77,16 @@ begin
   TCore.Obj.View.Remove(Self);
 
   inherited;
+end;
+
+procedure TfrControlBoxReceiver.rp_OffAir(AParams: TValueList);
+begin
+  btOnAir.SwitchOn := false;
+end;
+
+procedure TfrControlBoxReceiver.rp_OnAir(AParams: TValueList);
+begin
+  btOnAir.SwitchOn := true;
 end;
 
 procedure TfrControlBoxReceiver.TimerTimer(Sender: TObject);

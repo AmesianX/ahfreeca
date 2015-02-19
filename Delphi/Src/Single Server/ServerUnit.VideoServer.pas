@@ -77,7 +77,7 @@ var
   CustomHeader : TCustomHeader absolute ACustomData;
 begin
   {$IFDEF DEBUG}
-  Trace( Format('TVideoServer.on_FSocket_Received - PacketType: %s', [GetEnumName(TypeInfo(TPacketType), CustomHeader.PacketType)]) );
+//  Trace( Format('TVideoServer.on_FSocket_Received - PacketType: %s', [GetEnumName(TypeInfo(TPacketType), CustomHeader.PacketType)]) );
   {$ENDIF}
 
   try
@@ -117,7 +117,7 @@ begin
 
   FHeader.GetValue( Data, Size );
   try
-    AConnection.Send( CustomHeader.ToDWord, Data, Size );
+    if Data <> nil then AConnection.Send( CustomHeader.ToDWord, Data, Size );
   finally
     if Data <> nil then FreeMem(Data);
   end;

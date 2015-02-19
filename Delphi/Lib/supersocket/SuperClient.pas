@@ -33,7 +33,9 @@ type
 
     procedure Send(ACustomData:DWord; AData:Pointer; ASize:integer); overload;
     procedure Send(ACustomData:DWord; AText:string); overload;
+    procedure Send(ACustomData:DWord); overload;
 
+    procedure SendNow(ACustomData:DWord); overload;
     procedure SendNow(ACustomData:DWord; AData:Pointer; ASize:integer); overload;
     procedure SendNow(ACustomData:DWord; AText:string); overload;
 
@@ -198,6 +200,24 @@ begin
   finally
     if Data <> nil then FreeMem(Data);
   end;
+end;
+
+procedure TSuperClient.Send(ACustomData: DWord);
+var
+  Dummy : byte;
+begin
+  // SuperSocket은 Zero-byte Data를 허용하지 않는다.
+  // 따라서, PacketType만 보내서는 안되며, 더미라도 함께 보내야 한다.
+  Send( ACustomData, @Dummy, SizeOf(Dummy) );
+end;
+
+procedure TSuperClient.SendNow(ACustomData: DWord);
+var
+  Dummy : byte;
+begin
+  // SuperSocket은 Zero-byte Data를 허용하지 않는다.
+  // 따라서, PacketType만 보내서는 안되며, 더미라도 함께 보내야 한다.
+  SendNow( ACustomData, @Dummy, SizeOf(Dummy) );
 end;
 
 end.

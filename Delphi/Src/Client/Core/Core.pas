@@ -122,6 +122,8 @@ begin
 
   FView.sp_StartShow;
 
+  TClientUnit.Obj.TextClient.sp_OnAir;
+
   FIsShowStarted := true;
 end;
 
@@ -133,6 +135,8 @@ begin
   TVideoSender.Obj.Stop;
 
   FView.sp_StopShow;
+
+  TClientUnit.Obj.TextClient.sp_OffAir;
 end;
 
 end.

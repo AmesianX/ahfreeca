@@ -24,6 +24,12 @@ type
     }
     procedure sp_Whisper(AFromID,AUserIDs,AMsg:string; AColor:TColor);
 
+    /// 방송이 시작 되었다.
+    procedure sp_OnAir;
+
+    /// 방송이 종료 되었다.
+    procedure sp_OffAir;
+
     /// 현재 사용자 목록을 가져온다.
     procedure GetUserList(AListView:TListView);
 
