@@ -30,13 +30,17 @@ type
 implementation
 
 uses
-  VideoReceiver;
+  Core, VideoReceiver;
 
 { TVideoClient }
 
 function TVideoClient.Connect: boolean;
 begin
+  FSocket.Host := TCore.Obj.Option.Host;
+  FSocket.Port := VIDEO_SERVER_PORT;
+
   FSocket.Connect;
+
   Result := FSocket.Connected;
 end;
 
@@ -45,8 +49,6 @@ begin
   inherited;
 
   FSocket := TSuperClient.Create(nil);
-  FSocket.Host := SERVER_HOST;
-  FSocket.Port := VIDEO_SERVER_PORT;
   FSocket.OnConnected := on_FSocket_Connected;
   FSocket.OnReceived := on_FSocket_Received;
   FSocket.OnDisconnected := on_FSocket_Disconnected;

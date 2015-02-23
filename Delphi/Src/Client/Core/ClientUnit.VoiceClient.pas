@@ -30,13 +30,17 @@ type
 implementation
 
 uses
-  VoiceReceiver;
+  Core, VoiceReceiver;
 
 { TVoiceClient }
 
 function TVoiceClient.Connect: boolean;
 begin
+  FSocket.Host := TCore.Obj.Option.Host;
+  FSocket.Port := VOICE_SERVER_PORT;
+
   FSocket.Connect;
+
   Result := FSocket.Connected;
 end;
 
@@ -45,8 +49,6 @@ begin
   inherited;
 
   FSocket := TSuperClient.Create(nil);
-  FSocket.Host := SERVER_HOST;
-  FSocket.Port := VOICE_SERVER_PORT;
   FSocket.OnConnected := on_FSocket_Connected;
   FSocket.OnReceived := on_FSocket_Received;
   FSocket.OnDisconnected := on_FSocket_Disconnected;

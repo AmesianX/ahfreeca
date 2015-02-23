@@ -20,6 +20,7 @@ type
     FCamHeight: integer;
     FAlarmSound: string;
     FChatFontSize: integer;
+    FHost: string;
     procedure SetChatFontSize(const Value: integer);
     procedure SetAlarmSound(const Value: string);
     procedure SetCamHeight(const Value: integer);
@@ -28,6 +29,9 @@ type
     constructor Create;
     destructor Destroy; override;
   public
+    // 접속 할 서버의 주소
+    property Host : string read FHost;
+
     /// 접속자의 계정 아이디
     property UserID : string read FUserID;
 
@@ -54,6 +58,9 @@ implementation
 constructor TOption.Create;
 begin
   inherited;
+
+  if FindSwitchName('Host') then FHost := GetSwitchValue('Host')
+  else FHost := SERVER_HOST;
 
   FUserID := GetSwitchValue('UserID');
   FUserPW := GetSwitchValue('UserPW');

@@ -55,7 +55,11 @@ uses
 
 function TTextClient.Connect: boolean;
 begin
+  FSocket.Host := TCore.Obj.Option.Host;
+  FSocket.Port := TEXT_SERVER_PORT;
+
   FSocket.Connect;
+
   Result := FSocket.Connected;
 end;
 
@@ -66,8 +70,6 @@ begin
   FUserList := TUserList.Create;
 
   FSocket := TSuperClient.Create(nil);
-  FSocket.Host := SERVER_HOST;
-  FSocket.Port := TEXT_SERVER_PORT;
   FSocket.OnConnected := on_FSocket_Connected;
   FSocket.OnReceived := on_FSocket_Received;
   FSocket.OnDisconnected := on_FSocket_Disconnected;
