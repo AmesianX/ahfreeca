@@ -1,0 +1,31 @@
+vpx/src/vpx_image.c.o vpx/src/vpx_image.c.d: vpx/src/vpx_image.c \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/stdlib.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/sys/cdefs.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/sys/cdefs_elf.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/android/api-level.h \
+ /home/ryu/Dev/android-ndk-r10e/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stddef.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/string.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/malloc.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/xlocale.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/alloca.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/strings.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/sys/types.h \
+ /home/ryu/Dev/android-ndk-r10e/toolchains/arm-linux-androideabi-4.8/prebuilt/linux-x86_64/lib/gcc/arm-linux-androideabi/4.8/include/stdint.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/stdint.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/machine/wchar_limits.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/linux/types.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/asm/types.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/asm-generic/types.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/asm-generic/int-ll64.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/asm/bitsperlong.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/asm-generic/bitsperlong.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/linux/posix_types.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/linux/stddef.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/linux/compiler.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/asm/posix_types.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/asm-generic/posix_types.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/sys/sysmacros.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/memory.h \
+ vpx/vpx_image.h vpx/vpx_integer.h \
+ /home/ryu/Dev/android-ndk-r10e/platforms/android-21/arch-arm/usr/include/inttypes.h \
+ vpx_mem/vpx_mem.h vpx_config.h
