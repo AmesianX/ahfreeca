@@ -1,4 +1,7 @@
-I'd restarted this project on "https://bitbucket.org/ryujt/ahfreeca"
+# A simple video conferencing project.
 
-# ahfreeca
-Video Conferencing
+## Tutorials (Korean only)
+
+### Android
+
+* http://ryulib.tistory.com/399
