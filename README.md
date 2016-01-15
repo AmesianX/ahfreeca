@@ -4,4 +4,4 @@
 
 ### Android
 
-* http://ryulib.tistory.com/399
+* libvpx for Android #1 - http://ryulib.tistory.com/399
