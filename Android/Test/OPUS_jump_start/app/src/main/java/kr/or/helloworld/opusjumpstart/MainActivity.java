@@ -1,4 +1,4 @@
-package kr.or.helloworld.upxjumpstart;
+package kr.or.helloworld.opusjumpstart;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;

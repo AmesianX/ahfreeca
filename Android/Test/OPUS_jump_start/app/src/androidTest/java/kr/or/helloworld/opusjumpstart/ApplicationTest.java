@@ -1,4 +1,4 @@
-package kr.or.helloworld.upxjumpstart;
+package kr.or.helloworld.opusjumpstart;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

@@ -1,4 +1,4 @@
-package kr.or.helloworld.upxjumpstart;
+package kr.or.helloworld.opusjumpstart;
 
 import org.junit.Test;
 
