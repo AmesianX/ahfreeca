@@ -1,4 +1,4 @@
-package com.makeus.vpxjumpstart;
+package kr.or.helloworld.vpxjumpstart;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         int encoder = VPX.OpenEncoder(320, 240, 0, 25, 0);
-        int decoer = VPX.OpenDecoder(320, 240);
+        int decoder = VPX.OpenDecoder(320, 240);
 
         TextView tvHello = (TextView) findViewById(R.id.tvHello);
-        tvHello.setText(String.format("OpenDecoder: %d, OpenDecoder: %d", encoder, decoer));
+        tvHello.setText(String.format("OpenDecoder: %d, OpenDecoder: %d", encoder, decoder));
     }
 
     @Override

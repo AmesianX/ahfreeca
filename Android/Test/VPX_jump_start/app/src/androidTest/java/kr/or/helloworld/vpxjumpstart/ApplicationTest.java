@@ -1,4 +1,4 @@
-package com.makeus.vpxjumpstart;
+package kr.or.helloworld.vpxjumpstart;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

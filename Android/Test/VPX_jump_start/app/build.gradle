@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.makeus.vpxjumpstart"
+        applicationId "kr.or.helloworld.vpxjumpstart"
         minSdkVersion 13
         targetSdkVersion 23
         versionCode 1

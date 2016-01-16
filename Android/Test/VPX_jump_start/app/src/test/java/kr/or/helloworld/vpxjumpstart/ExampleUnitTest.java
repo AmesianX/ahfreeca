@@ -1,4 +1,4 @@
-package com.makeus.vpxjumpstart;
+package kr.or.helloworld.vpxjumpstart;
 
 import org.junit.Test;
 
