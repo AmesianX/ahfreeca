@@ -1,5 +1,9 @@
 # A simple video conferencing project.
 
+## Introduction
+
+* http://ryulib.tistory.com/357
+
 ## Tutorials (Korean only)
 
 ### Android
