@@ -4,15 +4,17 @@
 
 
 JNIEXPORT jint Java_ryulib_VoiceZip_OPUS_OpenEncoder(JNIEnv* env, jclass clazz, 
-	jint *pErrorCode, jint sampleRate, jint channels, jint bitrate)
+	jint sampleRate, jint channels, jint bitrate)
 {
 	OpusEncoder *pHandle;
 
-	pHandle = opus_encoder_create(sampleRate, channels, OPUS_APPLICATION_AUDIO, pErrorCode);
-	if (*pErrorCode < 0) return 0;
+	int errorCode;
 
-	*pErrorCode = opus_encoder_ctl(pHandle, OPUS_SET_BITRATE(bitrate));
-	if (*pErrorCode < 0) {
+	pHandle = opus_encoder_create(sampleRate, channels, OPUS_APPLICATION_AUDIO, &errorCode);
+	if (errorCode < 0) return 0;
+
+	errorCode = opus_encoder_ctl(pHandle, OPUS_SET_BITRATE(bitrate));
+	if (errorCode < 0) {
 		opus_encoder_destroy(pHandle);
 		return 0;
 	}
@@ -47,12 +49,14 @@ JNIEXPORT void Java_ryulib_VoiceZip_OPUS_CloseEncoder(JNIEnv* env, jclass clazz,
 }
 
 JNIEXPORT jint Java_ryulib_VoiceZip_OPUS_OpenDecoder(JNIEnv* env, jclass clazz, 
-	jint *pErrorCode, jint sampleRate, jint channels)
+	jint sampleRate, jint channels)
 {
 	OpusDecoder *pHandle;
 
-	pHandle = opus_decoder_create(sampleRate, channels, pErrorCode);
-	if (*pErrorCode < 0) return 0;
+	int errorCode;
+
+	pHandle = opus_decoder_create(sampleRate, channels, &errorCode);
+	if (errorCode < 0) return 0;
 
 	return (int) pHandle;
 }
